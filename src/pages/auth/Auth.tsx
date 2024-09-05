@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuthStorage } from '@/hooks/useAuthStorage'
 
 const loginSchema = z.object({
 	email: z.string().email('E-mail inválido').min(4, 'E-mail inválido '),
@@ -27,6 +28,8 @@ type LoginSchema = z.infer<typeof loginSchema>
 
 export const Auth = () => {
 	const [passwordVisibility, setPasswordVisibility] = useState(false)
+
+	const { signin } = useAuthStorage()
 
 	const {
 		register,
@@ -39,7 +42,8 @@ export const Auth = () => {
 	const onSubmit = async (data: LoginSchema) => {
 		console.log(data)
 		try {
-			toast.success('Enviamos um link de autenticação para seu e-mail.', {
+			signin({ jwt: '123' })
+			toast.success('Wcm', {
 				action: {
 					label: 'Reenviar',
 					onClick: () => {
@@ -74,6 +78,8 @@ export const Auth = () => {
 									id="email"
 									type="email"
 									placeholder="m@example.com"
+									className="data-[hasError]:focus-visible:ring-red-500 data-[hasError]:border-red-500"
+									data-hasError={errors.email?.message}
 									{...register('email')}
 								/>
 								{errors.email?.message && (
@@ -86,6 +92,8 @@ export const Auth = () => {
 									id="password"
 									type={passwordVisibility ? 'text' : 'password'}
 									{...register('password')}
+									className="data-[hasError]:focus-visible:ring-red-500 data-[hasError]:border-red-500"
+									data-hasError={errors.password?.message}
 								/>
 								{errors.password && (
 									<span className="text-red-500">
