@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button/button'
 import {
 	Card,
 	CardContent,
@@ -48,6 +48,8 @@ export const Auth = () => {
 				},
 			})
 		} catch (error) {
+			console.log(error)
+
 			toast.error('Credenciais inválidas.')
 		}
 	}
