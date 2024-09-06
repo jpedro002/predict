@@ -78,8 +78,8 @@ export const Auth = () => {
 									id="email"
 									type="email"
 									placeholder="m@example.com"
-									className="data-[hasError]:focus-visible:ring-red-500 data-[hasError]:border-red-500"
-									data-hasError={errors.email?.message}
+									className="data-[haserror]:focus-visible:ring-red-500 data-[haserror]:border-red-500"
+									data-haserror={errors.email?.message}
 									{...register('email')}
 								/>
 								{errors.email?.message && (
@@ -92,8 +92,8 @@ export const Auth = () => {
 									id="password"
 									type={passwordVisibility ? 'text' : 'password'}
 									{...register('password')}
-									className="data-[hasError]:focus-visible:ring-red-500 data-[hasError]:border-red-500"
-									data-hasError={errors.password?.message}
+									className="data-[haserror]:focus-visible:ring-red-500 data-[haserror]:border-red-500"
+									data-haserror={errors.password?.message}
 								/>
 								{errors.password && (
 									<span className="text-red-500">
