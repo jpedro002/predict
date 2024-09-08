@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { File as FileIcon, Upload, X } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
@@ -22,7 +22,7 @@ const Input = ({ dropzone }: InputProps) => {
 		<div
 			{...getRootProps()}
 			className={cn(
-				'w-full md:w-1/2 h-full min-h-[184px] rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-500 bg-gray-50 hover:bg-gray-100 transition-all',
+				'w-full h-full min-h-[184px] rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-500 bg-gray-50 hover:bg-gray-100 transition-all',
 				isDragActive ? 'border-blue-500' : 'border-gray-300',
 			)}
 		>
@@ -38,16 +38,14 @@ const Input = ({ dropzone }: InputProps) => {
 						)}
 					/>
 					{isDragActive ? (
-						<p className="font-bold text-lg text-blue-400">
-							Solte para adicionar
-						</p>
+						<p className="font-bold text-lg text-blue-400">Drop to add</p>
 					) : (
 						<>
 							<p className="mb-2 text-lg text-gray-500">
-								<span className="font-bold">Clique para enviar</span> ou arraste
-								até aqui
+								<span className="font-bold">Click to upload</span> or drag and
+								drop here
 							</p>
-							<p className="text-gray-400 text-sm">Apenas JPG ou MP4</p>
+							<p className="text-gray-400 text-sm">Only JPG or MP4</p>
 						</>
 					)}
 				</div>
@@ -60,7 +58,7 @@ const Input = ({ dropzone }: InputProps) => {
 const HasFile = ({ file, removeFile }: HasFileProps) => {
 	return (
 		<Card
-			className="w-full md:w-1/2 h-full flex justify-center items-center p-4
+			className="w-full h-full flex justify-center items-center p-4
 		min-h-[184px] border-gray-500 bg-gray-100 border-dashed  border-2"
 		>
 			<CardContent className="flex items-center gap-3 p-4 border rounded-lg bg-gray-50">
@@ -88,7 +86,10 @@ const HasFile = ({ file, removeFile }: HasFileProps) => {
 export const FileInput = () => {
 	const [file, setFile] = useState<File | null>(null)
 
-	const { setValue } = useFormContext()
+	const {
+		setValue,
+		formState: { isSubmitted },
+	} = useFormContext()
 
 	const removeFile = useCallback(() => {
 		setFile(null)
@@ -102,6 +103,12 @@ export const FileInput = () => {
 		},
 		[setValue],
 	)
+
+	useEffect(() => {
+		if (isSubmitted) {
+			setFile(null)
+		}
+	}, [isSubmitted])
 
 	const dropzone = useDropzone({
 		onDrop,
