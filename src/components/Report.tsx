@@ -1,35 +1,65 @@
+import { cn } from '@/lib/utils'
 import { predictData } from '@/pages/app/Home'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
+import { CustomPlot } from './CustomPlot'
 
 interface TitleProps {
 	children: ReactNode
+	className?: string
 }
 
-const Title = ({ children }: TitleProps) => {
-	return <h2 className="text-2xl font-bold text-gray-800 mb-4">{children}</h2>
+const Title = ({ children, className }: TitleProps) => {
+	return (
+		<h2 className={cn('text-2xl font-bold text-gray-800 mb-4', className)}>
+			{children}
+		</h2>
+	)
 }
-
 type ReportProps = predictData
 
 export const Report = ({ output_gif, predict }: ReportProps) => {
 	const {
-		nome,
-		right_knee_angle_mean,
-		right_knee_angle_min,
-		right_knee_angle_max,
-		left_knee_angle_mean,
-		left_knee_angle_min,
-		left_knee_angle_max,
-		velocity_mean,
-		velocity_max,
-		asymmetry_mean,
-		asymmetry_max,
+		nome = 'Nome do Arquivo',
+		right_knee_angle_mean = 0,
+		right_knee_angle_min = 0,
+		right_knee_angle_max = 0,
+		left_knee_angle_mean = 0,
+		left_knee_angle_min = 0,
+		left_knee_angle_max = 0,
+		velocity_mean = 0,
+		velocity_max = 0,
+		asymmetry_mean = 0,
+		asymmetry_max = 0,
+		asymmetry_json,
+		hip_movement_json,
+		knee_angle_json,
+		velocity_json,
 	} = predict!
 
+	const asymetryJsonParsed = JSON.parse(asymmetry_json)
+	const hipmovementJsonParsed = JSON.parse(hip_movement_json)
+	const kneeJsonParsed = JSON.parse(knee_angle_json)
+	const velJsonParsed = JSON.parse(velocity_json)
+
+	const sectionRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		if (sectionRef.current) {
+			sectionRef.current.scrollIntoView({ behavior: 'smooth' })
+		}
+	}, [])
+
 	return (
-		<section>
-			<div className="container p-8 max-w-2xl mx-auto bg-white">
-				<Title>Análise Cinemática da Caminhada - {nome}</Title>
+		<section
+			id="report-section"
+			ref={sectionRef}
+			className="w-full  mx-auto bg-white max-w-6xl flex flex-col items-center
+		"
+		>
+			<div className="p-8 ">
+				<Title className="text-center mb-8 text-3xl">
+					Análise Cinemática da Caminhada - {nome}
+				</Title>
 				<div className="flex justify-center mb-6">
 					<img src={`data:image/gif;base64,${output_gif}`} alt="Output GIF" />
 				</div>
@@ -97,6 +127,24 @@ export const Report = ({ output_gif, predict }: ReportProps) => {
 						</li>
 					</ul>
 				</div>
+			</div>
+			<div className="mb-6">
+				<CustomPlot
+					data={asymetryJsonParsed.data}
+					layout={asymetryJsonParsed.layout}
+				/>
+			</div>
+			<div className="mb-6">
+				<CustomPlot
+					data={hipmovementJsonParsed.data}
+					layout={hipmovementJsonParsed.layout}
+				/>
+			</div>
+			<div className="mb-6">
+				<CustomPlot data={kneeJsonParsed.data} layout={kneeJsonParsed.layout} />
+			</div>
+			<div className="mb-6">
+				<CustomPlot data={velJsonParsed.data} layout={velJsonParsed.layout} />
 			</div>
 		</section>
 	)

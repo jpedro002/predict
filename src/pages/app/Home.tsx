@@ -92,6 +92,8 @@ export const Home = () => {
 			.then((response) => {
 				console.log(response.data)
 
+				console.log(response.data.predict.asymmetry_json)
+
 				const data = response.data
 
 				'output_gif' in data
