@@ -88,7 +88,7 @@ export const FileInput = () => {
 
 	const {
 		setValue,
-		formState: { isSubmitted },
+		formState: { isSubmitSuccessful },
 	} = useFormContext()
 
 	const removeFile = useCallback(() => {
@@ -105,10 +105,10 @@ export const FileInput = () => {
 	)
 
 	useEffect(() => {
-		if (isSubmitted) {
+		if (isSubmitSuccessful) {
 			setFile(null)
 		}
-	}, [isSubmitted])
+	}, [isSubmitSuccessful])
 
 	const dropzone = useDropzone({
 		onDrop,
