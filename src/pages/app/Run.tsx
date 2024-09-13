@@ -1,4 +1,3 @@
-import { Header } from '@/components/Header'
 import { FileInput } from '@/components/InputFile'
 import { Report } from '@/components/Report'
 import { SelectPredict } from '@/components/SelectPredict'
@@ -54,7 +53,7 @@ export interface predictData {
 	predict: predict
 }
 
-export const Home = () => {
+export const Run = () => {
 	const [predictData, setPredictData] = useState<predictData>({
 		output_gif: '',
 		predict: {} as predict,
@@ -117,8 +116,7 @@ export const Home = () => {
 	}
 
 	return (
-		<main>
-			<Header title="Predictit" />
+		<main className="flex flex-col w-full h-full">
 			<section className="flex items-center justify-center ">
 				<FormProvider {...methods}>
 					<form

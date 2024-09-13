@@ -2,15 +2,14 @@ import { ReactNode } from 'react'
 
 interface HeaderProps {
 	children?: ReactNode
-	title: string
-	hasTitle?: boolean
+	title?: string
 }
 
-export const Header = ({ children, title, hasTitle = true }: HeaderProps) => {
+export const Header = ({ children, title }: HeaderProps) => {
 	return (
-		<header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
-			{hasTitle && <h1 className="text-xl font-semibold">{title}</h1>}
+		<header className="sticky top-0 z-10 flex min-h-[56.8px] max-h-[56.8px] items-center justify-between gap-1 border-b bg-background px-4">
 			{children}
+			{title && <h1 className="text-xl font-semibold">{title}</h1>}
 		</header>
 	)
 }
