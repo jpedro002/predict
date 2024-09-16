@@ -1,19 +1,18 @@
-import { QueryClientProvider } from '@tanstack/react-query'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { RouterProvider } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
-import { queryClient } from './lib/reactQuery.ts'
 import { router } from './router'
+import { ReduxProvider } from './store/ReduxProvider'
 
 export const App = () => {
 	return (
-		<HelmetProvider>
-			<Helmet titleTemplate="%s | Template" />
-			<QueryClientProvider client={queryClient}>
+		<ReduxProvider>
+			<HelmetProvider>
+				<Helmet titleTemplate="%s | Template" />
 				<RouterProvider router={router} />
 				<Toaster richColors />
-			</QueryClientProvider>
-		</HelmetProvider>
+			</HelmetProvider>
+		</ReduxProvider>
 	)
 }
