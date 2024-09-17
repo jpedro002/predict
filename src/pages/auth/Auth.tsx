@@ -42,7 +42,12 @@ export const Auth = () => {
 	const onSubmit = async (data: LoginSchema) => {
 		console.log(data)
 		try {
-			signin({ jwt: '123' })
+			signin({
+				jwt: '123',
+				email: data.email,
+				name: 'joão pedro',
+				roles: ['admin'],
+			})
 			toast.success('Wcm', {
 				action: {
 					label: 'Reenviar',

@@ -1,5 +1,6 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom'
 
+import { ProtectedRoute } from './components/ProtectedRoute'
 import { AppLayout, AuthLayout } from './layouts/@index'
 import { NotFound } from './pages/app/404'
 import { LogOut } from './pages/app/LogOut'
@@ -18,19 +19,35 @@ export const router = createBrowserRouter([
 				children: [
 					{
 						path: '/',
-						element: <div>Navigate to avaliable route in your role</div>,
+						element: (
+							<ProtectedRoute requiredRoles={['abc']}>
+								<div>rota sem nada :)</div>
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: '/run',
-						element: <Run />,
+						element: (
+							<ProtectedRoute requiredRoles={['run', 'admin']}>
+								<Run />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: '/soccer',
-						element: <div>soccer</div>,
+						element: (
+							<ProtectedRoute requiredRoles={['soccer', 'admin']}>
+								<div>soccer</div>
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: '/volleyball',
-						element: <div>volleyball</div>,
+						element: (
+							<ProtectedRoute requiredRoles={['volleyball', 'admin']}>
+								<div>volleyball</div>
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: '/logout',
@@ -46,11 +63,15 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/admin',
-				element: <AppLayout />,
+				element: (
+					<ProtectedRoute requiredRoles={['admin']}>
+						<AppLayout />
+					</ProtectedRoute>
+				),
 				children: [
 					{
 						path: '/admin',
-						element: <div>admin</div>,
+						element: <div>Admin</div>,
 					},
 				],
 			},
