@@ -113,7 +113,6 @@ export const FileInput = () => {
 	const dropzone = useDropzone({
 		onDrop,
 		accept: {
-			'image/jpeg': ['.jpg', '.jpeg'],
 			'video/mp4': ['.mp4'],
 		},
 	})

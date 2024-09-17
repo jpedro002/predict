@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
-import { predictData } from '@/pages/app/Home'
+
+import { predictData } from '@/store/slices/predictRunSlice'
 import { ReactNode, useEffect, useRef } from 'react'
 import { CustomPlot } from './CustomPlot'
 
@@ -17,7 +18,7 @@ const Title = ({ children, className }: TitleProps) => {
 }
 type ReportProps = predictData
 
-export const Report = ({ output_gif, predict }: ReportProps) => {
+export const ReportRunSection = ({ output_gif, predict }: ReportProps) => {
 	const {
 		nome = 'Nome do Arquivo',
 		right_knee_angle_mean = 0,
@@ -34,7 +35,7 @@ export const Report = ({ output_gif, predict }: ReportProps) => {
 		hip_movement_json,
 		knee_angle_json,
 		velocity_json,
-	} = predict!
+	} = predict
 
 	const asymetryJsonParsed = JSON.parse(asymmetry_json)
 	const hipmovementJsonParsed = JSON.parse(hip_movement_json)
@@ -128,22 +129,23 @@ export const Report = ({ output_gif, predict }: ReportProps) => {
 					</ul>
 				</div>
 			</div>
-			<div className="mb-6">
+			<div className="mb-6 w-96 sm:w-[80%] md:w-full overflow-x-auto ">
 				<CustomPlot
 					data={asymetryJsonParsed.data}
 					layout={asymetryJsonParsed.layout}
 				/>
 			</div>
-			<div className="mb-6">
+			<div className="mb-6 w-full sm:w-[80%] md:w-full overflow-x-auto">
 				<CustomPlot
 					data={hipmovementJsonParsed.data}
 					layout={hipmovementJsonParsed.layout}
 				/>
 			</div>
-			<div className="mb-6">
+
+			<div className="mb-6 w-96 sm:w-[80%] md:w-full overflow-x-auto">
 				<CustomPlot data={kneeJsonParsed.data} layout={kneeJsonParsed.layout} />
 			</div>
-			<div className="mb-6">
+			<div className="mb-6 w-96 sm:w-[80%] md:w-full overflow-x-auto">
 				<CustomPlot data={velJsonParsed.data} layout={velJsonParsed.layout} />
 			</div>
 		</section>
