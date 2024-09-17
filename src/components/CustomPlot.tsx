@@ -8,12 +8,22 @@ interface CustomPlotProps {
 }
 
 export const CustomPlot = ({ data, layout }: CustomPlotProps) => {
+	const responsiveLayout = {
+		...layout,
+		autosize: true,
+		width: undefined,
+		height: undefined,
+	}
+
 	return (
-		<Plot
-			data={data}
-			layout={layout}
-			useResizeHandler
-			className="w-full max-w-6xl h-[500px]"
-		/>
+		<div className="min-w-[600px] w-full max-w-full overflow-x-auto">
+			<Plot
+				data={data}
+				layout={responsiveLayout}
+				useResizeHandler
+				style={{ width: '100%', height: '100%' }}
+				className="h-[500px]"
+			/>
+		</div>
 	)
 }
