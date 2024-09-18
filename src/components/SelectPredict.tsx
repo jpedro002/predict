@@ -5,8 +5,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { FormType } from '@/pages/app/Home'
 import { Controller, useFormContext } from 'react-hook-form'
+import { FormType } from './FormSubmitVideo'
 
 interface SelectPredictProps {
 	options: string[]
