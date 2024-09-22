@@ -36,6 +36,7 @@ export const useAuthStorage = () => {
 		soccer: '/soccer',
 		volleyball: '/volleyball',
 		admin: '/admin',
+		soccerQuestions: '/soccer-questions',
 	}
 
 	const getDefaultRoute = (roles: string[]): string => {

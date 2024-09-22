@@ -24,7 +24,7 @@ export function AppLayout() {
 	const user = getUser()
 
 	const titleHeader = useMemo(
-		() => location.pathname.split('/')[1],
+		() => location.pathname.split('/')[1].split('-').join(' '),
 		[location.pathname],
 	)
 
