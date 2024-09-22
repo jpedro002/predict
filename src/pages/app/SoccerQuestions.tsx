@@ -33,147 +33,141 @@ export const SoccerQuestions = () => {
 					{/* Nível de Estresse */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Nível de Estresse
+							Niveau de Stress
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você avalia seu nível de estresse geral hoje?"
+							label="Comment évalueriez-vous votre niveau de stress général aujourd'hui ?"
 							name="stressLevel"
 							hasFieldError={!!errors.stressLevel}
-							scaleDescription="Escala: 0 (Sem estresse) a 10 (Extremamente estressado)"
+							scaleDescription="Échelle : 0 (Pas de stress) à 10 (Extrêmement stressé)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você percebe seu estresse emocional atualmente?"
+							label="Comment ressentez-vous votre stress émotionnel actuellement ?"
 							name="emotionalStress"
 							hasFieldError={!!errors.emotionalStress}
-							scaleDescription="Escala: 0 (Sem estresse emocional) a 10 (Extremo estresse emocional)"
+							scaleDescription="Échelle : 0 (Aucun stress émotionnel) à 10 (Stress émotionnel extrême)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como o estresse físico afetou seu desempenho nos treinos ou competições recentes?"
+							label="Comment le stress physique a-t-il affecté votre performance lors des entraînements ou compétitions récentes ?"
 							name="physicalImpact"
 							hasFieldError={!!errors.physicalImpact}
-							scaleDescription="Escala: 0 (Sem impacto) a 10 (Totalmente afetado)"
+							scaleDescription="Échelle : 0 (Aucun impact) à 10 (Totalement affecté)"
 						/>
 					</div>
-
 					{/* Qualidade do Sono */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Qualidade do Sono
+							Qualité du Sommeil
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você classificaria a qualidade do seu sono na última noite?"
+							label="Comment évalueriez-vous la qualité de votre sommeil la nuit dernière ?"
 							name="sleepQuality"
 							hasFieldError={!!errors.sleepQuality}
-							scaleDescription="Escala: 0 (Muito ruim) a 10 (Excelente)"
+							scaleDescription="Échelle : 0 (Très mauvaise) à 10 (Excellente)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Quantas horas de sono você teve nas últimas 24 horas?"
+							label="Combien d'heures de sommeil avez-vous eues au cours des dernières 24 heures ?"
 							name="sleepHours"
 							hasFieldError={!!errors.sleepHours}
-							scaleDescription="Escala: 0 (Nenhuma) a 10 (Mais de 8 horas)"
+							scaleDescription="Échelle : 0 (Aucune) à 10 (Plus de 8 heures)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você se sentiu ao acordar hoje?"
+							label="Comment vous êtes-vous senti(e) en vous réveillant aujourd'hui ?"
 							name="wakeUpFeeling"
 							hasFieldError={!!errors.wakeUpFeeling}
-							scaleDescription="Escala: 0 (Extremamente cansado) a 10 (Totalmente revigorado)"
+							scaleDescription="Échelle : 0 (Extrêmement fatigué(e)) à 10 (Totalement revigoré(e))"
 						/>
 					</div>
-
 					{/* Nível de Fadiga */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Nível de Fadiga
+							Niveau de Fatigue
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você avalia seu nível de fadiga física atualmente?"
+							label="Comment évalueriez-vous votre niveau de fatigue physique actuellement ?"
 							name="fatigueLevel"
 							hasFieldError={!!errors.fatigueLevel}
-							scaleDescription="Escala: 0 (Sem fadiga) a 10 (Fadiga extrema)"
+							scaleDescription="Échelle : 0 (Pas de fatigue) à 10 (Fatigue extrême)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Qual é o impacto da fadiga no seu desempenho durante os treinos ou competições?"
+							label="Quel est l'impact de la fatigue sur votre performance pendant les entraînements ou compétitions ?"
 							name="fatigueImpact"
 							hasFieldError={!!errors.fatigueImpact}
-							scaleDescription="Escala: 0 (Nenhum impacto) a 10 (Totalmente prejudicado)"
+							scaleDescription="Échelle : 0 (Aucun impact) à 10 (Totalement affecté)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como está seu nível de energia agora, em comparação com o seu normal?"
+							label="Comment évaluez-vous votre niveau d'énergie actuel par rapport à votre normal ?"
 							name="energyLevel"
 							hasFieldError={!!errors.energyLevel}
-							scaleDescription="Escala: 0 (Muito abaixo do normal) a 10 (Acima do normal)"
+							scaleDescription="Échelle : 0 (Bien en dessous de la normale) à 10 (Au-dessus de la normale)"
 						/>
 					</div>
-
 					{/* Percepção de Dor e Desconforto Muscular */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Percepção de Dor e Desconforto Muscular
+							Perception de la Douleur et de l'Inconfort Musculaire
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Qual o seu nível de dor muscular hoje?"
+							label="Quel est votre niveau de douleur musculaire aujourd'hui ?"
 							name="musclePain"
 							hasFieldError={!!errors.musclePain}
-							scaleDescription="Escala: 0 (Sem dor) a 10 (Dor extrema)"
+							scaleDescription="Échelle : 0 (Aucune douleur) à 10 (Douleur extrême)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você avalia a rigidez muscular ao acordar?"
+							label="Comment évaluez-vous la raideur musculaire au réveil ?"
 							name="muscleStiffness"
 							hasFieldError={!!errors.muscleStiffness}
-							scaleDescription="Escala: 0 (Nenhuma rigidez) a 10 (Rigidez extrema)"
+							scaleDescription="Échelle : 0 (Aucune raideur) à 10 (Raideur extrême)"
 						/>
 						<FieldFormSoccerQuestions
-							label="A dor ou desconforto afetou seu desempenho durante o treino ou competição?"
+							label="La douleur ou l'inconfort a-t-il affecté votre performance pendant l'entraînement ou la compétition ?"
 							name="muscleImpact"
 							hasFieldError={!!errors.muscleImpact}
-							scaleDescription="Escala: 0 (Não afetou) a 10 (Totalmente prejudicou)"
+							scaleDescription="Échelle : 0 (Aucun impact) à 10 (Totalement affecté)"
 						/>
 					</div>
-
 					{/* Capacidade de Recuperação */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Capacidade de Recuperação
+							Capacité de Récupération
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você se sente em relação à sua capacidade de se recuperar entre os treinos?"
+							label="Comment ressentez-vous votre capacité à récupérer entre les entraînements ?"
 							name="recoveryAbility"
 							hasFieldError={!!errors.recoveryAbility}
-							scaleDescription="Escala: 0 (Recuperação muito lenta) a 10 (Recuperação muito rápida)"
+							scaleDescription="Échelle : 0 (Récupération très lente) à 10 (Récupération très rapide)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Você percebe alguma diferença na sua capacidade de recuperar após as sessões de treino mais intensas?"
+							label="Remarquez-vous une différence dans votre capacité à récupérer après les séances d'entraînement les plus intenses ?"
 							name="recoveryDifference"
 							hasFieldError={!!errors.recoveryDifference}
-							scaleDescription="Escala: 0 (Sem diferença) a 10 (Totalmente diferente, muito mais lenta)"
+							scaleDescription="Échelle : 0 (Aucune différence) à 10 (Totalement différente, beaucoup plus lente)"
 						/>
 					</div>
-
 					{/* Nível de Motivação e Engajamento */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Nível de Motivação e Engajamento
+							Niveau de Motivation et d'Engagement
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Quão motivado você está para treinar hoje?"
+							label="À quel point êtes-vous motivé(e) pour vous entraîner aujourd'hui ?"
 							name="motivationLevel"
 							hasFieldError={!!errors.motivationLevel}
-							scaleDescription="Escala: 0 (Nada motivado) a 10 (Extremamente motivado)"
+							scaleDescription="Échelle : 0 (Pas du tout motivé(e)) à 10 (Extrêmement motivé(e))"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você avalia sua concentração durante os treinos ou competições?"
+							label="Comment évalueriez-vous votre concentration pendant les entraînements ou les compétitions ?"
 							name="concentrationLevel"
 							hasFieldError={!!errors.concentrationLevel}
-							scaleDescription="Escala: 0 (Totalmente disperso) a 10 (Totalmente focado)"
+							scaleDescription="Échelle : 0 (Totalement distrait(e)) à 10 (Totalement concentré(e))"
 						/>
 						<FieldFormSoccerQuestions
-							label="A experiência de treinos ou competições recentes afetou sua motivação?"
+							label="Les expériences récentes d'entraînement ou de compétition ont-elles affecté votre motivation ?"
 							name="motivationImpact"
 							hasFieldError={!!errors.motivationImpact}
-							scaleDescription="Escala: 0 (Não afetou) a 10 (Influenciou muito negativamente)"
+							scaleDescription="Échelle : 0 (Pas du tout) à 10 (Fortement impacté(e) négativement)"
 						/>
 					</div>
-
 					{/* Percepção de Carga de Treino */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
@@ -198,83 +192,107 @@ export const SoccerQuestions = () => {
 							scaleDescription="Escala: 0 (Nunca) a 10 (O tempo todo)"
 						/>
 					</div>
-
-					{/* Controle de Movimentos e Coordenação */}
+					{/* Perception de la Charge d'Entraînement */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Controle de Movimentos e Coordenação
+							Perception de la Charge d'Entraînement
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você avalia sua coordenação motora durante o treino hoje?"
+							label="Comment évalueriez-vous l'intensité de votre entraînement aujourd'hui ?"
+							name="workoutIntensity"
+							hasFieldError={!!errors.workoutIntensity}
+							scaleDescription="Échelle : 0 (Très léger) à 10 (Extrêmement intense)"
+						/>
+						<FieldFormSoccerQuestions
+							label="Comment percevez-vous votre effort global pendant l'entraînement ou la compétition ?"
+							name="workoutEffort"
+							hasFieldError={!!errors.workoutEffort}
+							scaleDescription="Échelle : 0 (Aucun effort) à 10 (Effort extrême)"
+						/>
+						<FieldFormSoccerQuestions
+							label="Y a-t-il eu des moments où vous avez ressenti que vous ne pouviez pas suivre la charge d'entraînement ?"
+							name="workoutOverload"
+							hasFieldError={!!errors.workoutOverload}
+							scaleDescription="Échelle : 0 (Jamais) à 10 (Tout le temps)"
+						/>
+					</div>
+					{/* Contrôle des Mouvements et Coordination */}
+					<div className="mb-6">
+						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
+							Contrôle des Mouvements et Coordination
+						</h2>
+						<FieldFormSoccerQuestions
+							label="Comment évaluez-vous votre coordination motrice pendant l'entraînement aujourd'hui ?"
 							name="coordinationLevel"
 							hasFieldError={!!errors.coordinationLevel}
-							scaleDescription="Escala: 0 (Totalmente descoordenado) a 10 (Perfeita coordenação)"
+							scaleDescription="Échelle : 0 (Totalement désordonné(e)) à 10 (Coordination parfaite)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Sentiu algum tipo de tremor ou descontrole durante a execução dos movimentos?"
+							label="Avez-vous ressenti des tremblements ou un manque de contrôle lors de l'exécution des mouvements ?"
 							name="tremors"
 							hasFieldError={!!errors.tremors}
-							scaleDescription="Escala: 0 (Não) a 10 (Tremores constantes)"
+							scaleDescription="Échelle : 0 (Non) à 10 (Tremblements constants)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você avalia a precisão de seus movimentos durante o treino?"
+							label="Comment évaluez-vous la précision de vos mouvements pendant l'entraînement ?"
 							name="movementAccuracy"
 							hasFieldError={!!errors.movementAccuracy}
-							scaleDescription="Escala: 0 (Totalmente impreciso) a 10 (Totalmente preciso)"
+							scaleDescription="Échelle : 0 (Totalement imprécis) à 10 (Totalement précis)"
 						/>
 					</div>
 
-					{/* Estado Emocional e Bem-Estar Psicológico */}
+					{/* État Émotionnel et Bien-être Psychologique */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Estado Emocional e Bem-Estar Psicológico
+							État Émotionnel et Bien-être Psychologique
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você classificaria seu humor hoje?"
+							label="Comment évalueriez-vous votre humeur aujourd'hui ?"
 							name="moodLevel"
 							hasFieldError={!!errors.moodLevel}
-							scaleDescription="Escala: 0 (Muito negativo) a 10 (Muito positivo)"
+							scaleDescription="Échelle : 0 (Très négatif) à 10 (Très positif)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Houve algo que o deixou ansioso ou preocupado antes do treino/competição?"
+							label="Y a-t-il eu quelque chose qui vous a rendu(e) anxieux(se) ou préoccupé(e) avant l'entraînement/la compétition ?"
 							name="anxietyLevel"
 							hasFieldError={!!errors.anxietyLevel}
-							scaleDescription="Escala: 0 (Nada) a 10 (Extremamente ansioso/preocupado)"
+							scaleDescription="Échelle : 0 (Pas du tout) à 10 (Extrêmement anxieux(se)/préoccupé(e))"
 						/>
 						<FieldFormSoccerQuestions
-							label="Como você se sente em relação ao seu desempenho recente?"
+							label="Comment vous sentez-vous par rapport à vos performances récentes ?"
 							name="performanceSatisfaction"
 							hasFieldError={!!errors.performanceSatisfaction}
-							scaleDescription="Escala: 0 (Extremamente insatisfeito) a 10 (Totalmente satisfeito)"
+							scaleDescription="Échelle : 0 (Extrêmement insatisfait(e)) à 10 (Totalement satisfait(e))"
 						/>
 					</div>
 
-					{/* Alimentação e Hidratação */}
+					{/* Alimentation et Hydratation */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Alimentação e Hidratação
+							Alimentation et Hydratation
 						</h2>
 						<FieldFormSoccerQuestions
-							label="Como você avalia sua ingestão alimentar nas últimas 24 horas?"
+							label="Comment évalueriez-vous votre apport alimentaire au cours des dernières 24 heures ?"
 							name="foodIntake"
 							hasFieldError={!!errors.foodIntake}
-							scaleDescription="Escala: 0 (Muito inadequada) a 10 (Totalmente adequada)"
+							scaleDescription="Échelle : 0 (Très inadéquat) à 10 (Totalement adéquat)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Qual foi a qualidade da sua hidratação nas últimas 24 horas?"
+							label="Quelle était la qualité de votre hydratation au cours des dernières 24 heures ?"
 							name="hydrationQuality"
 							hasFieldError={!!errors.hydrationQuality}
-							scaleDescription="Escala: 0 (Muito ruim) a 10 (Excelente)"
+							scaleDescription="Échelle : 0 (Très mauvaise) à 10 (Excellente)"
 						/>
 						<FieldFormSoccerQuestions
-							label="Sentiu falta de energia ou força relacionada à sua alimentação ou hidratação?"
+							label="Avez-vous ressenti un manque d'énergie ou de force lié à votre alimentation ou hydratation ?"
 							name="energyImpact"
 							hasFieldError={!!errors.energyImpact}
-							scaleDescription="Escala: 0 (Nada) a 10 (Totalmente relacionado)"
+							scaleDescription="Échelle : 0 (Aucun manque) à 10 (Manque extrême)"
 						/>
 					</div>
+
 					<Button type="submit" className="mx-auto w-full md:max-w-48">
-						Enviar
+						envoyer
 					</Button>
 				</form>
 			</FormProvider>
