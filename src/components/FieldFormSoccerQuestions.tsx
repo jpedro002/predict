@@ -61,7 +61,7 @@ export const FieldFormSoccerQuestions = ({
 				))}
 			</div>
 			{hasFieldError && (
-				<p className="text-red-500 text-sm">Campo obrigatório</p>
+				<p className="text-red-500 text-sm">Champ obligatoire</p>
 			)}
 		</div>
 	)
