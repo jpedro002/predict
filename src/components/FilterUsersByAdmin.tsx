@@ -14,39 +14,31 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-const orderFiltersSchema = z.object({
-	orderId: z.string().optional(),
+const userFiltersSchema = z.object({
 	customerName: z.string().optional(),
 	status: z.string().optional(),
 })
 
-type OrderFiltersSchema = z.infer<typeof orderFiltersSchema>
+type UserFiltersSchema = z.infer<typeof userFiltersSchema>
 
 export function FilterUsersByAdmin() {
 	const [searchParams, setSearchParams] = useSearchParams()
 
-	const orderId = searchParams.get('orderId')
 	const customerName = searchParams.get('customerName')
 	const status = searchParams.get('status')
 
-	const { register, handleSubmit, control, reset } =
-		useForm<OrderFiltersSchema>({
-			resolver: zodResolver(orderFiltersSchema),
+	const { register, handleSubmit, control, reset } = useForm<UserFiltersSchema>(
+		{
+			resolver: zodResolver(userFiltersSchema),
 			defaultValues: {
-				orderId: orderId ?? '',
 				customerName: customerName ?? '',
 				status: status ?? 'all',
 			},
-		})
+		},
+	)
 
-	function handleFilter({ customerName, orderId, status }: OrderFiltersSchema) {
+	function handleFilter({ customerName, status }: UserFiltersSchema) {
 		setSearchParams((state) => {
-			if (orderId) {
-				state.set('orderId', orderId.trim())
-			} else {
-				state.delete('orderId')
-			}
-
 			if (customerName) {
 				state.set('customerName', customerName.trim())
 			} else {
@@ -65,7 +57,6 @@ export function FilterUsersByAdmin() {
 
 	function handleClearFilters() {
 		setSearchParams((state) => {
-			state.delete('orderId')
 			state.delete('customerName')
 			state.delete('status')
 
@@ -73,7 +64,6 @@ export function FilterUsersByAdmin() {
 		})
 
 		reset({
-			orderId: '',
 			customerName: '',
 			status: 'all',
 		})
