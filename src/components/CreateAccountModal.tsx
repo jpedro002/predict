@@ -59,12 +59,24 @@ export default function CreateAccountModal() {
 	}
 
 	useEffect(() => {
-		console.log(errors, 'errors')
-	}, [errors])
-
-	useEffect(() => {
 		if (isOpen) {
-			reset()
+			console.log(isOpen)
+
+			reset(
+				{
+					name: '',
+					email: '',
+					password: '',
+					retypePassword: '',
+					roles: [],
+				},
+				{ keepValues: false },
+			)
+
+			setPasswordVisibility({
+				password1: false,
+				password2: false,
+			})
 		}
 	}, [isOpen, reset])
 
