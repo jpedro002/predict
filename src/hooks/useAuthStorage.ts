@@ -56,6 +56,8 @@ export const useAuthStorage = () => {
 			return children
 	}
 
+	const ROLES = Object.keys(roleRoutes)
+
 	return {
 		signin,
 		signout,
@@ -64,5 +66,6 @@ export const useAuthStorage = () => {
 		renderIfRouteIsAvailable,
 		roleRoutes,
 		availableRoutes,
+		ROLES,
 	}
 }

@@ -9,8 +9,8 @@ import {
 import { Helmet } from 'react-helmet-async'
 
 import { FilterUsersByAdmin } from '@/components/FilterUsersByAdmin'
-import { Button } from '@/components/ui/button/button'
 
+import CreateAccountModal from '@/components/CreateAccountModal'
 import { useAppTitle } from '@/hooks/useAppTitle'
 import { UsersTableRow } from '../../components/UsersTableRow'
 
@@ -22,7 +22,7 @@ export const ListUsers = () => {
 			<Helmet title="Usuarios" />
 
 			<div className="space-y-6 mx-auto w-full p-4 max-w-5xl  ">
-				<Button className=" w-full sm:max-w-[16rem] ">Criar Usuario</Button>
+				<CreateAccountModal />
 				<FilterUsersByAdmin />
 
 				<div className="    ">
