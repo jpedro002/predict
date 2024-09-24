@@ -12,7 +12,6 @@ import { FilterUsersByAdmin } from '@/components/FilterUsersByAdmin'
 import { Button } from '@/components/ui/button/button'
 
 import { useAppTitle } from '@/hooks/useAppTitle'
-import { useSearchParams } from 'react-router-dom'
 import { UsersTableRow } from '../../components/UsersTableRow'
 
 export const ListUsers = () => {
