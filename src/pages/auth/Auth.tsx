@@ -46,7 +46,7 @@ export const Auth = () => {
 				jwt: '123',
 				email: data.email,
 				name: 'joão pedro',
-				roles: ['soccerQuestions'],
+				roles: ['volleyball'],
 			})
 			toast.success('Wcm', {
 				action: {

@@ -2,7 +2,10 @@ import { Outlet, createBrowserRouter } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AppLayout, AuthLayout } from './layouts/@index'
+import { AdminLayout } from './layouts/AdminLayout'
+import { ListUsers } from './pages/admin/ListUsers'
 import { NotFound } from './pages/app/404'
+import { AthleteManagementPanel } from './pages/app/AthleteManagementPanel'
 import { LogOut } from './pages/app/LogOut'
 import { Run } from './pages/app/Run'
 import { SoccerQuestions } from './pages/app/SoccerQuestions'
@@ -51,10 +54,18 @@ export const router = createBrowserRouter([
 						),
 					},
 					{
-						path: '/soccer-questions',
+						path: '/questions',
 						element: (
-							<ProtectedRoute requiredRoles={['soccerQuestions', 'admin']}>
+							<ProtectedRoute requiredRoles={['volleyballAthlete', 'admin']}>
 								<SoccerQuestions />
+							</ProtectedRoute>
+						),
+					},
+					{
+						path: '/volleyball/management',
+						element: (
+							<ProtectedRoute requiredRoles={['volleyball', 'admin']}>
+								<AthleteManagementPanel />
 							</ProtectedRoute>
 						),
 					},
@@ -74,13 +85,13 @@ export const router = createBrowserRouter([
 				path: '/admin',
 				element: (
 					<ProtectedRoute requiredRoles={['admin']}>
-						<AppLayout />
+						<AdminLayout />
 					</ProtectedRoute>
 				),
 				children: [
 					{
 						path: '/admin',
-						element: <div>Admin</div>,
+						element: <ListUsers />,
 					},
 				],
 			},

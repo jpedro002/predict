@@ -4,17 +4,14 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
-import { useAuthStorage } from '@/hooks/useAuthStorage'
 import { BrainCircuit, Menu } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NavLink } from './NavLink'
 import { Button } from './ui/button/button'
 
-export const SheetAppMobile = () => {
+export const SheetAdminMobile = () => {
 	const [isOpened, setIsOpened] = useState(false)
-
-	const { renderIfRouteIsAvailable } = useAuthStorage()
 
 	const handleChangeOpen = () => {
 		setIsOpened((prev) => !prev)
@@ -40,42 +37,9 @@ export const SheetAppMobile = () => {
 						<BrainCircuit className="h-6 w-6" />
 						<span className="sr-only">Predict Home</span>
 					</Link>
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/run">
-							Run
-						</NavLink>,
-						'run',
-					)}
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/volleyball">
-							Volleyball
-						</NavLink>,
-						'volleyball',
-					)}
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/volleyball/management">
-							Volleyball Management
-						</NavLink>,
-						'volleyball',
-					)}
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/soccer">
-							Soccer
-						</NavLink>,
-						'soccer',
-					)}
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/questions">
-							soccer questions
-						</NavLink>,
-						'volleyballAthlete',
-					)}
-					{renderIfRouteIsAvailable(
-						<NavLink onClick={handleChangeOpen} to="/admin">
-							Admin
-						</NavLink>,
-						'admin',
-					)}
+					<NavLink onClick={handleChangeOpen} to="/run">
+						App Run
+					</NavLink>
 				</nav>
 			</SheetContent>
 		</Sheet>

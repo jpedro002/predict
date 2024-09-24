@@ -34,7 +34,7 @@ const initialState: predictData = {
 }
 
 export const predictRunSlice = createSlice({
-	name: 'counter',
+	name: 'predictRun',
 	initialState,
 	reducers: {
 		startPredictData: (state, action: PayloadAction<predictData>) => {

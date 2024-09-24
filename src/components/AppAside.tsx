@@ -1,6 +1,7 @@
 import SoccerBall from '@/assets/icons/SoccerBall'
 import {
 	Activity,
+	FolderKanban,
 	MessageCircleQuestion,
 	ShieldMinus,
 	Triangle,
@@ -43,6 +44,14 @@ export const AppAside = () => {
 						)}
 						{renderIfRouteIsAvailable(
 							<CustomToolTip
+								to="/volleyball/management"
+								icon={<FolderKanban className="size-5" />}
+								label="Volleyball Management"
+							/>,
+							'volleyball',
+						)}
+						{renderIfRouteIsAvailable(
+							<CustomToolTip
 								to="/soccer"
 								icon={<SoccerBall className="size-5" />}
 								label="Soccer"
@@ -51,11 +60,11 @@ export const AppAside = () => {
 						)}
 						{renderIfRouteIsAvailable(
 							<CustomToolTip
-								to="/soccer-questions"
+								to="/questions"
 								icon={<MessageCircleQuestion className="size-5" />}
 								label="Soccer Questions"
 							/>,
-							'soccerQuestions',
+							'volleyballAthlete',
 						)}
 						{renderIfRouteIsAvailable(
 							<CustomToolTip

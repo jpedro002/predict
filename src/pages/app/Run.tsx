@@ -1,5 +1,6 @@
 import { FormSubmitVideo, FormType } from '@/components/FormSubmitVideo'
 import { ReportRunSection } from '@/components/ReportRunSection'
+import { useAppTitle } from '@/hooks/useAppTitle'
 import { api } from '@/lib/axios'
 import { useAppSelector } from '@/store'
 import {
@@ -10,6 +11,8 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 export const Run = () => {
+	useAppTitle({ title: 'Corrida' })
+
 	const predictGif = useAppSelector((state) => state.predictRunSlice.output_gif)
 	const predict = useAppSelector((state) => state.predictRunSlice.predict)
 

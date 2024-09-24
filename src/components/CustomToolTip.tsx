@@ -29,7 +29,7 @@ export const CustomToolTip = ({ icon, label, to }: CustomToolTipProps) => {
 					<Link to={to}>{icon}</Link>
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent side="right" sideOffset={5}>
+			<TooltipContent side="right" sideOffset={5} className="z-50">
 				{label}
 			</TooltipContent>
 		</Tooltip>

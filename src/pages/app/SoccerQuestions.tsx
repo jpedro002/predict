@@ -1,11 +1,16 @@
 import { FieldFormSoccerQuestions } from '@/components/FieldFormSoccerQuestions'
 import { Button } from '@/components/ui/button/button'
+import { useAppTitle } from '@/hooks/useAppTitle'
 import { athleteFormSchema, athleteFormType } from '@/schemas/AthleteFormSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
+//TODO: rename this component to volleyballQuestionsForm
+
 export const SoccerQuestions = () => {
+	useAppTitle({ title: 'questionnaire' })
+
 	const methods = useForm<athleteFormType>({
 		resolver: zodResolver(athleteFormSchema),
 	})

@@ -36,12 +36,12 @@ export const useAuthStorage = () => {
 		soccer: '/soccer',
 		volleyball: '/volleyball',
 		admin: '/admin',
-		soccerQuestions: '/soccer-questions',
+		volleyballAthlete: '/questions',
 	}
 
 	const getDefaultRoute = (roles: string[]): string => {
 		const route = roles.find((role) => roleRoutes[role])
-		return route ? roleRoutes[route] : '/'
+		return route ? roleRoutes[route] : '/logout'
 	}
 
 	const user = getUser()

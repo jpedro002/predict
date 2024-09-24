@@ -1,8 +1,8 @@
 import { Link, Outlet } from 'react-router-dom'
 
-import { AppAside } from '@/components/AppAside'
+import { AdminAside } from '@/components/AdminAside'
 import { Header } from '@/components/Header'
-import { SheetAppMobile } from '@/components/SheetAppMobile'
+import { SheetAdminMobile } from '@/components/SheetAdminMobile'
 import { Button } from '@/components/ui/button/button'
 import {
 	DropdownMenu,
@@ -16,7 +16,7 @@ import { useAuthStorage } from '@/hooks/useAuthStorage'
 import { useAppSelector } from '@/store'
 import { User } from 'lucide-react'
 
-export function AppLayout() {
+export function AdminLayout() {
 	const { getUser } = useAuthStorage()
 
 	const user = getUser()
@@ -25,11 +25,11 @@ export function AppLayout() {
 
 	return (
 		<div className="flex flex-col md:grid h-full min-h-screen w-full md:grid-cols-[min-content_1fr] md:items-start">
-			<AppAside />
+			<AdminAside />
 
 			<div className="flex flex-col w-full h-full">
 				<Header>
-					<SheetAppMobile />
+					<SheetAdminMobile />
 					<h1 className="text-xl font-semibold capitalize">{titleHeader}</h1>
 					<div className="md:ml-auto">
 						<DropdownMenu>
