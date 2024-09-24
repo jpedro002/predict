@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/popover'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { Ellipsis, Pencil } from 'lucide-react'
-import { DeleteUserAlert } from './DeleteUserAlert'
+import { DeleteAthleteAlert } from './DeleteAthleteAlert'
 
 interface AthleteManagementTableRowProps {
 	id: number
@@ -49,10 +49,10 @@ export const AthleteManagementTableRow = ({
 					</PopoverTrigger>
 					<PopoverContent align="end" className="w-[200px]">
 						<Button variant="ghost" className="flex w-full justify-between p-2">
-							<span>Editar</span>
+							<span>Edit</span>
 							<Pencil size={18} />
 						</Button>
-						<DeleteUserAlert />
+						<DeleteAthleteAlert />
 					</PopoverContent>
 				</Popover>
 			</TableCell>

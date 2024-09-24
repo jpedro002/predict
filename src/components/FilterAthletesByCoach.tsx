@@ -95,13 +95,9 @@ export function FilterAthletesByCoach() {
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="all">All Roles</SelectItem>
-								<SelectItem value="run">Running</SelectItem>
-								<SelectItem value="Soccer">Soccer</SelectItem>
-								<SelectItem value="volleyball">Volleyball</SelectItem>
-								<SelectItem value="volleyballAthlete">
-									Volleyball Athlete
-								</SelectItem>
+								<SelectItem value="all">All Status</SelectItem>
+								<SelectItem value="responded">Responded</SelectItem>
+								<SelectItem value="notResponded">Not Responded</SelectItem>
 							</SelectContent>
 						</Select>
 					)
