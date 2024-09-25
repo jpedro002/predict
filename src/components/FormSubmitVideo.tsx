@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button/button'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { Label } from './ui/label'
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'video/mp4']
@@ -28,11 +30,13 @@ export type FormType = z.infer<typeof schema>
 interface FormSubmitVideoProps {
 	onSubmit: (data: FormType, reset: () => void) => void
 	isLoading: boolean
+	predicOptions: string[]
 }
 
 export const FormSubmitVideo = ({
 	isLoading,
 	onSubmit,
+	predicOptions,
 }: FormSubmitVideoProps) => {
 	const methods = useForm<FormType>({
 		defaultValues: {
@@ -48,6 +52,10 @@ export const FormSubmitVideo = ({
 		reset,
 	} = methods
 
+	useEffect(() => {
+		console.log(errors, 'errors')
+	}, [errors])
+
 	return (
 		<FormProvider {...methods}>
 			<form
@@ -57,19 +65,19 @@ export const FormSubmitVideo = ({
 				className=" w-full md:w-1/2  max-w-lg  flex p-6 flex-col gap-8"
 			>
 				<div className="flex flex-col w-full gap-2  ">
-					<label htmlFor="file">File</label>
+					<Label htmlFor="file">File</Label>
 					<FileInput />
 					{errors.file?.message && (
 						<span className="text-red-500">{String(errors.file.message)}</span>
 					)}
 				</div>
 				<div className="flex flex-col w-full gap-2  ">
-					<label htmlFor="file">Type Predict</label>
+					<Label htmlFor="file">Type Predict</Label>
 					<SelectPredict
 						placeholder="Select type of prediction"
-						options={['a', 'b', 'c', 'd']}
+						options={predicOptions}
 					/>
-					{errors.predictType?.message && (
+					{errors.predictType && (
 						<span className="text-red-500">
 							{String(errors.predictType.message)}
 						</span>

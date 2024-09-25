@@ -8,7 +8,9 @@ import { NotFound } from './pages/app/404'
 import { AthleteManagementPanel } from './pages/app/AthleteManagementPanel'
 import { LogOut } from './pages/app/LogOut'
 import { Run } from './pages/app/Run'
+import { SoccerPredict } from './pages/app/SoccerPredict'
 import { SoccerQuestions } from './pages/app/SoccerQuestions'
+import { VolleyballPredict } from './pages/app/VolleyballPredict'
 import { Auth } from './pages/auth/Auth'
 import { Register } from './pages/auth/Register'
 
@@ -41,7 +43,7 @@ export const router = createBrowserRouter([
 						path: '/soccer',
 						element: (
 							<ProtectedRoute requiredRoles={['soccer', 'admin']}>
-								<div>soccer</div>
+								<SoccerPredict />
 							</ProtectedRoute>
 						),
 					},
@@ -49,7 +51,7 @@ export const router = createBrowserRouter([
 						path: '/volleyball',
 						element: (
 							<ProtectedRoute requiredRoles={['volleyball', 'admin']}>
-								<div>volleyball</div>
+								<VolleyballPredict />
 							</ProtectedRoute>
 						),
 					},

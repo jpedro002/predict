@@ -1,8 +1,6 @@
 import { FormSubmitVideo, FormType } from '@/components/FormSubmitVideo'
-import { ReportRunSection } from '@/components/ReportRunSection'
 import { useAppTitle } from '@/hooks/useAppTitle'
 import { api } from '@/lib/axios'
-import { useAppSelector } from '@/store'
 import {
 	PredictRunStats,
 	startPredictData,
@@ -11,13 +9,10 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 
-const PREDICTOPTIONS = ['asymmetry', 'speed', 'distance', 'time']
+const PREDICTOPTIONS = ['block', 'setter stats', 'lob', 'spike']
 
-export const Run = () => {
-	useAppTitle({ title: 'Corrida' })
-
-	const predictGif = useAppSelector((state) => state.predictRunSlice.output_gif)
-	const predict = useAppSelector((state) => state.predictRunSlice.predict)
+export const VolleyballPredict = () => {
+	useAppTitle({ title: 'VolleyBall Predic' })
 
 	const [loading, setLoading] = useState(false)
 
@@ -29,8 +24,8 @@ export const Run = () => {
 		formData.append('file', data.file)
 		formData.append('predictType', data.predictType)
 
-		setLoading(true)
 		//TODO: use predict tipe to change endpoint
+		setLoading(true)
 
 		api
 			.post('/predict-run', formData, {
@@ -79,9 +74,6 @@ export const Run = () => {
 					predicOptions={PREDICTOPTIONS}
 				/>
 			</section>
-			{predictGif && predict && (
-				<ReportRunSection output_gif={predictGif} predict={predict} />
-			)}
 		</main>
 	)
 }
