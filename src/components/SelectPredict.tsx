@@ -22,13 +22,13 @@ export const SelectPredict = ({ options, placeholder }: SelectPredictProps) => {
 			control={control}
 			render={({ field: { onChange, value } }) => (
 				<Select onValueChange={onChange} value={value}>
-					<SelectTrigger>
+					<SelectTrigger type="button">
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>
 					<SelectContent>
-						{options.map((item) => (
-							<SelectItem key={item} value={item}>
-								{item}
+						{options.map((label) => (
+							<SelectItem key={label} value={label}>
+								{label}
 							</SelectItem>
 						))}
 					</SelectContent>
