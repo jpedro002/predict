@@ -1,6 +1,6 @@
 import { AthleteManagementTableRow } from '@/components/AthleteManagementTableRow'
+import CoachCreateAthleteModal from '@/components/CoachCreateAthleteModal'
 import { FilterAthletesByCoach } from '@/components/FilterAthletesByCoach'
-import { Button } from '@/components/ui/button/button'
 import {
 	Table,
 	TableBody,
@@ -19,7 +19,7 @@ export const AthleteManagementPanel = () => {
 			<Helmet title="Athlete" />
 
 			<div className="space-y-6 mx-auto w-full p-4 max-w-5xl  ">
-				<Button className=" w-full sm:max-w-[16rem] ">Create Athlete</Button>
+				<CoachCreateAthleteModal />
 				<FilterAthletesByCoach />
 
 				<div className="    ">
