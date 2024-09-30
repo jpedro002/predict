@@ -12,14 +12,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthStorage } from '@/hooks/useAuthStorage'
+
 import { useAppSelector } from '@/store'
 import { User } from 'lucide-react'
 
 export function AdminLayout() {
-	const { getUser } = useAuthStorage()
-
-	const user = getUser()
+	const user = useAppSelector((state) => state.user)
 
 	const titleHeader = useAppSelector((state) => state.appHeaderTitleSlice.title)
 

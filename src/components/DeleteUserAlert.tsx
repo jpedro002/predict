@@ -10,13 +10,38 @@ import {
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button/button'
+import appUsersService from '@/services/appUsers/appUsersServices'
+import { deleteUserFromStore } from '@/store/slices/appUsersSlice'
 import { Trash } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 
 interface DeleteUserAlertProps {
-	onDelete?: () => void
+	userID: number
 }
 
-export const DeleteUserAlert = ({ onDelete }: DeleteUserAlertProps) => {
+export const DeleteUserAlert = ({ userID }: DeleteUserAlertProps) => {
+	const dispatch = useDispatch()
+	const { deleteUser } = appUsersService
+
+	const handleDeleteUser = async () => {
+		try {
+			const response = await deleteUser(userID)
+
+			if ('message' in response) {
+				toast.error(response.message)
+				return
+			}
+			if (response.success) {
+				dispatch(deleteUserFromStore(userID))
+				toast.success('Usuário excluído com sucesso')
+			}
+		} catch (error) {
+			console.error(error)
+			toast.error('Erro ao excluir usuário')
+		}
+	}
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -43,7 +68,7 @@ export const DeleteUserAlert = ({ onDelete }: DeleteUserAlertProps) => {
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancelar</AlertDialogCancel>
 					<AlertDialogAction
-						onClick={onDelete}
+						onClick={handleDeleteUser}
 						className="bg-red-600 text-white hover:bg-red-700"
 					>
 						Confirmar

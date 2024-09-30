@@ -2,14 +2,20 @@ import { FieldFormSoccerQuestions } from '@/components/FieldFormSoccerQuestions'
 import { Button } from '@/components/ui/button/button'
 import { useAppTitle } from '@/hooks/useAppTitle'
 import { athleteFormSchema, athleteFormType } from '@/schemas/AthleteFormSchema'
+import { AthleteFormSubmitService } from '@/services/AthleteFormSubmitService'
+import { useAppSelector } from '@/store'
+import { setStatusAthlete } from '@/store/slices/userSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 
 //TODO: rename this component to volleyballQuestionsForm
 
 export const SoccerQuestions = () => {
 	useAppTitle({ title: 'questionnaire' })
+	const dayliResponse = useAppSelector((state) => state.user.statusAthlete)
+	const dispatch = useDispatch()
 
 	const methods = useForm<athleteFormType>({
 		resolver: zodResolver(athleteFormSchema),
@@ -20,13 +26,27 @@ export const SoccerQuestions = () => {
 		formState: { errors },
 	} = methods
 
-	const onSubmit = (data: athleteFormType) => {
-		console.log('Form Submitted:', data)
-	}
+	const onSubmit = async (data: athleteFormType) => {
+		try {
+			if (dayliResponse) {
+				return toast.error(
+					'try again tomorrow u already submitted the form today',
+				)
+			}
 
-	useEffect(() => {
-		console.log(errors, 'errors')
-	}, [errors])
+			const response = await AthleteFormSubmitService(data)
+
+			if ('message' in response) {
+				return toast.error(response.message)
+			}
+			if (response.success) {
+				dispatch(setStatusAthlete(true))
+				return toast.success('Form submitted successfully')
+			}
+		} catch (_error) {
+			toast.error('Error submitting form')
+		}
+	}
 
 	return (
 		<main>
@@ -296,7 +316,11 @@ export const SoccerQuestions = () => {
 						/>
 					</div>
 
-					<Button type="submit" className="mx-auto w-full md:max-w-48">
+					<Button
+						type="submit"
+						disabled={dayliResponse}
+						className="mx-auto w-full md:max-w-48"
+					>
 						envoyer
 					</Button>
 				</form>

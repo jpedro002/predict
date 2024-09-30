@@ -5,14 +5,16 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { Ellipsis, Pencil } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
+import { useMemo } from 'react'
 import { DeleteUserAlert } from './DeleteUserAlert'
+import UpdateUserModal from './UpdateUserModal'
 
 interface UsersTableRowProps {
 	id: number
 	name: string
 	email: string
-	cargo: string
+	cargo: string[]
 }
 
 export const UsersTableRow = ({
@@ -21,11 +23,19 @@ export const UsersTableRow = ({
 	email,
 	cargo,
 }: UsersTableRowProps) => {
+	const defaultValues = useMemo(() => {
+		return {
+			name,
+			email,
+			roles: cargo.map((role) => ({ role })),
+		}
+	}, [])
+
 	return (
 		<TableRow key={id}>
 			<TableCell className=" font-medium">{name}</TableCell>
 			<TableCell>{email}</TableCell>
-			<TableCell>{cargo}</TableCell>
+			<TableCell>{cargo.join(', ')}</TableCell>
 			<TableCell>
 				<Popover>
 					<PopoverTrigger asChild>
@@ -34,11 +44,8 @@ export const UsersTableRow = ({
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent align="end" className="w-[200px]">
-						<Button variant="ghost" className="flex w-full justify-between p-2">
-							<span>Editar</span>
-							<Pencil size={18} />
-						</Button>
-						<DeleteUserAlert />
+						<UpdateUserModal defaultValues={defaultValues} userID={id} />
+						<DeleteUserAlert userID={id} />
 					</PopoverContent>
 				</Popover>
 			</TableCell>

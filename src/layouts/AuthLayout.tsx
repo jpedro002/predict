@@ -1,20 +1,19 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useAuthStorage } from '@/hooks/useAuthStorage'
 
 export const AuthLayout = () => {
 	const navigate = useNavigate()
-	const location = useLocation()
-	const { getUser } = useAuthStorage()
+	const { getJwt } = useAuthStorage()
 
 	useEffect(() => {
-		const user = getUser()
+		const jwt = getJwt()
 
-		if (user?.jwt) {
+		if (jwt) {
 			navigate('/')
 		}
-	}, [location.pathname, getUser, navigate])
+	}, [navigate, getJwt])
 
 	return (
 		<div className="grid min-h-screen grid-cols-1 place-items-center antialiased">

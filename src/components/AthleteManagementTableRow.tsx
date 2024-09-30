@@ -5,20 +5,31 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { Ellipsis, Pencil } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
+import { useMemo } from 'react'
 import { DeleteAthleteAlert } from './DeleteAthleteAlert'
+import { UpdateAthleteModal } from './UpdateAthletModal'
 
 interface AthleteManagementTableRowProps {
 	id: number
 	name: string
 	statusDailyResponse: boolean
+	email: string
 }
 
 export const AthleteManagementTableRow = ({
 	id,
 	name,
 	statusDailyResponse,
+	email,
 }: AthleteManagementTableRowProps) => {
+	const defaultValues = useMemo(() => {
+		return {
+			name,
+			email,
+		}
+	}, [name, email])
+
 	return (
 		<TableRow key={id}>
 			<TableCell className=" font-medium">{name}</TableCell>
@@ -48,11 +59,8 @@ export const AthleteManagementTableRow = ({
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent align="end" className="w-[200px]">
-						<Button variant="ghost" className="flex w-full justify-between p-2">
-							<span>Edit</span>
-							<Pencil size={18} />
-						</Button>
-						<DeleteAthleteAlert />
+						<UpdateAthleteModal athleteID={id} defaultValues={defaultValues} />
+						<DeleteAthleteAlert athleteID={id} />
 					</PopoverContent>
 				</Popover>
 			</TableCell>

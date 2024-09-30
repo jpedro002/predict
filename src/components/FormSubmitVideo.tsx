@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button/button'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Label } from './ui/label'
@@ -18,8 +17,6 @@ const schema = z.object({
 		.refine((file) => file !== null && file !== undefined, 'campo obrigatório')
 		.refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
 		.refine((file) => {
-			// console.log(file?.type)
-
 			return ACCEPTED_IMAGE_TYPES.includes(file?.type)
 		}, 'Only .jpg, .jpeg, .png, .webp, and .mp4 formats are supported.'),
 	predictType: z.string().min(1, 'campo obrigatório'),
@@ -51,10 +48,6 @@ export const FormSubmitVideo = ({
 		formState: { errors, isSubmitting },
 		reset,
 	} = methods
-
-	useEffect(() => {
-		console.log(errors, 'errors')
-	}, [errors])
 
 	return (
 		<FormProvider {...methods}>

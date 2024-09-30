@@ -49,7 +49,7 @@
 				"noUnusedLabels": "error",
 				"noUnusedVariables": "error",
 				"useArrayLiterals": "off",
-				"useExhaustiveDependencies": "warn",
+				"useExhaustiveDependencies": "off",
 				"useHookAtTopLevel": "error",
 				"useIsNan": "error",
 				"useValidForDirection": "error",

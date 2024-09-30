@@ -5,19 +5,20 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
-import { Controller, useFieldArray, useForm } from 'react-hook-form'
-
 import { useAuthStorage } from '@/hooks/useAuthStorage'
-import { RegisterSchema, schema } from '@/schemas/AdminCreateUserSchema'
+import {
+	UpdateUserSchema,
+	updateUserSchema,
+} from '@/schemas/AdminCreateUserSchema'
 import appUsersService from '@/services/appUsers/appUsersServices'
 import { useAppSelector } from '@/store'
-import { addUser } from '@/store/slices/appUsersSlice'
-import { Eye, EyeOff, Minus, Plus } from 'lucide-react'
+import { updateUser } from '@/store/slices/appUsersSlice'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Minus, Pencil, Plus } from 'lucide-react'
+import { useState } from 'react'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
-import { SpinnerLoading } from './SpinnerLoading'
 import { Button } from './ui/button/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -29,29 +30,32 @@ import {
 	SelectValue,
 } from './ui/select'
 
-export default function CreateAccountModal() {
+export default function UpdateUserModal({
+	defaultValues,
+	userID,
+}: {
+	defaultValues: {
+		name: string
+		email: string
+		roles: { role: string }[]
+	}
+	userID: number
+}) {
 	const [isOpen, setIsOpen] = useState(false)
-	const [passwordVisibility, setPasswordVisibility] = useState({
-		password1: false,
-		password2: false,
-	})
 
 	const loading = useAppSelector((state) => state.appUsers.isLoading)
 
 	const { ROLES } = useAuthStorage()
-
-	const { createUser } = appUsersService
-
 	const dispatch = useDispatch()
 
 	const {
 		register,
 		handleSubmit,
 		control,
-		reset,
 		formState: { errors, isSubmitting },
-	} = useForm<RegisterSchema>({
-		resolver: zodResolver(schema),
+	} = useForm<UpdateUserSchema>({
+		resolver: zodResolver(updateUserSchema),
+		defaultValues,
 	})
 
 	const { fields, append, remove } = useFieldArray({
@@ -59,102 +63,42 @@ export default function CreateAccountModal() {
 		name: 'roles',
 	})
 
-	const togglePasswordVisibility = (field: 'password1' | 'password2') => {
-		setPasswordVisibility((prev) => ({
-			...prev,
-			[field]: !prev[field],
-		}))
-	}
-
-	const onSubmit = async (data: RegisterSchema) => {
+	const onSubmit = async (data: UpdateUserSchema) => {
 		try {
 			const roles = data.roles.map(({ role }) => role)
 
-			const response = await createUser({
+			const response = await appUsersService.updateUser(userID, {
 				...data,
 				role: roles,
-				email: data.email.trim().toLocaleLowerCase(),
 			})
 
 			if ('message' in response) {
 				return toast.error(response.message)
 			}
 
-			dispatch(addUser(response))
-			toast.success('Usuário criado com sucesso')
+			dispatch(updateUser(response))
+			toast.success('Usuário atualizado com sucesso')
+			setIsOpen(false)
 		} catch (error) {
 			console.error(error)
-			toast.error('Erro ao criar usuário')
+			toast.error('Erro ao atualizar usuário')
 		}
 	}
-
-	useEffect(() => {
-		if (isOpen) {
-			reset(
-				{
-					name: '',
-					email: '',
-					password: '',
-					retypePassword: '',
-					roles: [],
-				},
-				{ keepValues: false },
-			)
-
-			setPasswordVisibility({
-				password1: false,
-				password2: false,
-			})
-		}
-	}, [isOpen, reset])
-
-	const renderPasswordField = (
-		id: string,
-		label: string,
-		passwordField: 'password1' | 'password2',
-	) => (
-		<div className="relative space-y-2">
-			<Label htmlFor={id}>{label}</Label>
-			<Input
-				id={id}
-				type={passwordVisibility[passwordField] ? 'text' : 'password'}
-				{...register(id as keyof RegisterSchema)}
-			/>
-			{errors[id as keyof typeof errors] && (
-				<span className="text-red-500">
-					{errors[id as keyof typeof errors]?.message}
-				</span>
-			)}
-			<div className="absolute right-0 top-6">
-				<Button
-					type="button"
-					size="icon"
-					variant="ghost"
-					onClick={() => togglePasswordVisibility(passwordField)}
-					className="hover:bg-transparent"
-				>
-					{passwordVisibility[passwordField] ? <EyeOff /> : <Eye />}
-					<span className="sr-only">
-						{passwordVisibility[passwordField]
-							? 'Ocultar senha'
-							: 'Mostrar senha'}
-					</span>
-				</Button>
-			</div>
-		</div>
-	)
 
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
 			<DialogTrigger asChild>
-				<Button className="w-full sm:max-w-[16rem]">Criar Usuário</Button>
+				<Button variant="ghost" className="flex w-full justify-between p-2">
+					<span>Editar</span>
+					<Pencil size={18} />
+				</Button>
 			</DialogTrigger>
 			<DialogContent
+				className="flex flex-col min-h-screen sm:min-h-fit overflow-y-auto "
 				aria-describedby={undefined}
-				className="flex flex-col min-h-screen sm:min-h-fit overflow-y-auto h-full"
 			>
 				<DialogHeader>
-					<DialogTitle>Criar Conta</DialogTitle>
+					<DialogTitle>Editar Conta</DialogTitle>
 				</DialogHeader>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
@@ -177,13 +121,10 @@ export default function CreateAccountModal() {
 							)}
 						</div>
 
-						{renderPasswordField('password', 'Senha', 'password1')}
-						{renderPasswordField('retypePassword', 'Repita senha', 'password2')}
-
-						<div className="flex flex-col gap-4 mt-4  ">
+						<div className="flex flex-col gap-4 mt-4">
 							{fields.map((field, index) => (
 								<div className="flex flex-col gap-1" key={field.id}>
-									<div className="flex items-center justify-between my-">
+									<div className="flex items-center justify-between">
 										<Controller
 											name={`roles.${index}.role`}
 											control={control}
@@ -209,7 +150,7 @@ export default function CreateAccountModal() {
 										<Button
 											type="button"
 											onClick={() => remove(index)}
-											className="bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 active:bg-red-800 transition-colors duration-200"
+											className="bg-red-600 text-white hover:bg-red-700"
 											size="icon"
 										>
 											<Minus size={24} />
@@ -228,11 +169,7 @@ export default function CreateAccountModal() {
 							<Button
 								type="button"
 								onClick={() => append({ role: '' })}
-								className="bg-green-600 text-white hover:bg-green-700 focus:ring-2
-							 focus:ring-green-500 active:bg-green-800 transition-colors duration-200
-							 mx-auto w-fit items-center px-2
-							 "
-								size="icon"
+								className="bg-green-600 text-white hover:bg-green-700"
 							>
 								<span className="mr-2">Adicionar Cargo</span>
 								<Plus size={24} />
@@ -240,22 +177,27 @@ export default function CreateAccountModal() {
 							{errors.roles && (
 								<span className="text-red-500">{errors.roles.message}</span>
 							)}
-							{errors.roles?.root && (
-								<span className="text-red-500">
-									{errors.roles?.root?.message}
-								</span>
-							)}
 						</div>
 					</div>
 
-					<Button
-						className="w-full mt-5"
-						disabled={isSubmitting || loading}
-						type="submit"
-					>
-						{loading && <SpinnerLoading />}
-						Finalizar Cadastro
-					</Button>
+					<div className="flex justify-between">
+						<Button
+							className="w-full mt-5"
+							disabled={isSubmitting || loading}
+							type="submit"
+						>
+							{loading ? 'Atualizando...' : 'Atualizar Usuário'}
+						</Button>
+						<Button
+							type="button"
+							className="w-fit mt-5 ml-2"
+							onClick={() => {
+								console.log('oi')
+							}}
+						>
+							Resetar Senha
+						</Button>
+					</div>
 				</form>
 			</DialogContent>
 		</Dialog>

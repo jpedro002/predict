@@ -1,8 +1,8 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom'
-
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AppLayout, AuthLayout } from './layouts/@index'
 import { AdminLayout } from './layouts/AdminLayout'
+import { UserProvider } from './layouts/UserProvider'
 import { ListUsers } from './pages/admin/ListUsers'
 import { NotFound } from './pages/app/404'
 import { AthleteManagementPanel } from './pages/app/AthleteManagementPanel'
@@ -12,19 +12,29 @@ import { SoccerPredict } from './pages/app/SoccerPredict'
 import { SoccerQuestions } from './pages/app/SoccerQuestions'
 import { VolleyballPredict } from './pages/app/VolleyballPredict'
 import { Auth } from './pages/auth/Auth'
-import { Register } from './pages/auth/Register'
+
+const Roles = {
+	ADMIN: 'admin',
+	RUN: 'run',
+	SOCCER: 'soccer',
+	VOLLEYBALL: 'volleyball',
+	VOLLEYBALL_ATHLETE: 'volleyballAthlete',
+}
 
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Outlet />,
+		element: (
+			<UserProvider>
+				<Outlet />,
+			</UserProvider>
+		),
 		children: [
 			{
-				path: '/',
 				element: <AppLayout />,
 				children: [
 					{
-						path: '/',
+						path: '',
 						element: (
 							<ProtectedRoute requiredRoles={['abc']}>
 								<div>rota sem nada :)</div>
@@ -32,89 +42,81 @@ export const router = createBrowserRouter([
 						),
 					},
 					{
-						path: '/run',
+						path: 'run',
 						element: (
-							<ProtectedRoute requiredRoles={['run', 'admin']}>
+							<ProtectedRoute requiredRoles={[Roles.RUN, Roles.ADMIN]}>
 								<Run />
 							</ProtectedRoute>
 						),
 					},
 					{
-						path: '/soccer',
+						path: 'soccer',
 						element: (
-							<ProtectedRoute requiredRoles={['soccer', 'admin']}>
+							<ProtectedRoute requiredRoles={[Roles.SOCCER, Roles.ADMIN]}>
 								<SoccerPredict />
 							</ProtectedRoute>
 						),
 					},
 					{
-						path: '/volleyball',
+						path: 'volleyball',
 						element: (
-							<ProtectedRoute requiredRoles={['volleyball', 'admin']}>
+							<ProtectedRoute requiredRoles={[Roles.VOLLEYBALL, Roles.ADMIN]}>
 								<VolleyballPredict />
 							</ProtectedRoute>
 						),
 					},
 					{
-						path: '/questions',
+						path: 'questions',
 						element: (
-							<ProtectedRoute requiredRoles={['volleyballAthlete', 'admin']}>
+							<ProtectedRoute
+								requiredRoles={[Roles.VOLLEYBALL_ATHLETE, Roles.ADMIN]}
+							>
 								<SoccerQuestions />
 							</ProtectedRoute>
 						),
 					},
 					{
-						path: '/volleyball/management',
+						path: 'volleyball/management',
 						element: (
-							<ProtectedRoute requiredRoles={['volleyball', 'admin']}>
+							<ProtectedRoute requiredRoles={[Roles.VOLLEYBALL, Roles.ADMIN]}>
 								<AthleteManagementPanel />
 							</ProtectedRoute>
 						),
 					},
 					{
-						path: '/logout',
+						path: 'logout',
 						element: <LogOut />,
 					},
 				],
 			},
-		],
-	},
-	{
-		path: '/',
-		element: <Outlet />,
-		children: [
 			{
-				path: '/admin',
-				element: (
-					<ProtectedRoute requiredRoles={['admin']}>
-						<AdminLayout />
-					</ProtectedRoute>
-				),
+				path: 'admin',
+				element: <AdminLayout />,
 				children: [
 					{
-						path: '/admin',
-						element: <ListUsers />,
+						path: '',
+						element: (
+							<ProtectedRoute requiredRoles={[Roles.ADMIN]}>
+								<ListUsers />
+							</ProtectedRoute>
+						),
 					},
 				],
 			},
-		],
-	},
-	{
-		path: '/',
-		element: <AuthLayout />,
-		children: [
 			{
-				path: '/auth',
-				element: <Auth />,
+				path: 'auth',
+				element: <AuthLayout />,
+				children: [
+					{
+						path: '',
+						element: <Auth />,
+					},
+				],
 			},
 			{
-				path: '/register',
-				element: <Register />,
+				path: '*',
+				element: <NotFound />,
 			},
 		],
-	},
-	{
-		path: '/*',
-		element: <NotFound />,
 	},
 ])

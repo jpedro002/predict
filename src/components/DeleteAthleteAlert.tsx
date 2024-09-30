@@ -10,12 +10,36 @@ import {
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button/button'
+import athletesService from '@/services/volleyballManagement/volleyballManagement'
+import { deleteAthleteFromStore } from '@/store/slices/athletesSlice'
 import { Trash } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 
 interface DeleteAthleteAlertProps {
-	onDelete?: () => void
+	athleteID: number
 }
-export const DeleteAthleteAlert = ({ onDelete }: DeleteAthleteAlertProps) => {
+export const DeleteAthleteAlert = ({ athleteID }: DeleteAthleteAlertProps) => {
+	const dispatch = useDispatch()
+
+	const handleDeleteAthlete = async () => {
+		try {
+			const response = await athletesService.deleteAthlete(athleteID)
+
+			if ('message' in response) {
+				toast.error(response.message)
+				return
+			}
+			if (response.success) {
+				dispatch(deleteAthleteFromStore(athleteID))
+				toast.success('Atleta excluído com sucesso')
+			}
+		} catch (error) {
+			console.error(error)
+			toast.error('Erro ao excluir atleta')
+		}
+	}
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -42,7 +66,7 @@ export const DeleteAthleteAlert = ({ onDelete }: DeleteAthleteAlertProps) => {
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
 					<AlertDialogAction
-						onClick={onDelete}
+						onClick={handleDeleteAthlete}
 						className="bg-red-600 text-white hover:bg-red-700"
 					>
 						Confirm

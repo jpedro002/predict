@@ -1,34 +1,48 @@
+import { useAppSelector } from '@/store'
+import { clearUser, setUser } from '@/store/slices/userSlice'
 import { ReactNode, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-interface AuthData {
-	jwt: string
-	name: string
-	email: string
-	roles: string[]
-}
-
-const APP_KEY = 'APP_KEY'
+export const APP_KEY = 'APP_KEY'
 
 export const useAuthStorage = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const user = useAppSelector((state) => state.user)
 
-	const signin = ({ jwt, email, name, roles }: AuthData) => {
-		localStorage.setItem(APP_KEY, JSON.stringify({ jwt, email, name, roles }))
+	const signin = ({
+		jwt,
+		email,
+		name,
+		roles,
+		id,
+		statusAthlete,
+	}: {
+		jwt: string
+		id: number
+		email: string
+		name: string
+		roles: string[]
+		statusAthlete: boolean
+	}) => {
+		localStorage.setItem(APP_KEY, jwt)
 
-		console.log(getDefaultRoute(roles))
+		dispatch(
+			setUser({ email, name, roles, id, isLoadingUser: false, statusAthlete }),
+		)
 
 		navigate(getDefaultRoute(roles), { replace: true })
 	}
 
 	const signout = () => {
 		localStorage.removeItem(APP_KEY)
+		dispatch(clearUser())
 		navigate('/auth', { replace: true })
 	}
 
-	const getUser = (): AuthData | null => {
-		const userData = localStorage.getItem(APP_KEY)
-		return userData ? JSON.parse(userData) : null
+	const getJwt = (): string | null => {
+		return localStorage.getItem(APP_KEY)
 	}
 
 	const roleRoutes: { [key: string]: string } = {
@@ -41,15 +55,13 @@ export const useAuthStorage = () => {
 
 	const getDefaultRoute = (roles: string[]): string => {
 		const route = roles.find((role) => roleRoutes[role])
-		return route ? roleRoutes[route] : '/logout'
+		return route ? roleRoutes[route] : '/'
 	}
 
-	const user = getUser()
-	const userRoles = user?.roles || []
-
+	// Função que verifica as rotas disponíveis com base nos papéis do usuário
 	const availableRoutes = useMemo(() => {
-		return Object.keys(roleRoutes).filter((role) => userRoles.includes(role))
-	}, [userRoles])
+		return Object.keys(roleRoutes).filter((role) => user.roles.includes(role))
+	}, [user.roles])
 
 	const renderIfRouteIsAvailable = (children: ReactNode, role: string) => {
 		if (availableRoutes.includes(role) || availableRoutes.includes('admin'))
@@ -61,7 +73,7 @@ export const useAuthStorage = () => {
 	return {
 		signin,
 		signout,
-		getUser,
+		getJwt,
 		getDefaultRoute,
 		renderIfRouteIsAvailable,
 		roleRoutes,

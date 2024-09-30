@@ -13,7 +13,11 @@ import {
 	CoachRegisterAthleteSchema,
 	coachRegisterAthleteSchema,
 } from '@/schemas/CoachCreateAthleteSchema'
+import athletesService from '@/services/volleyballManagement/volleyballManagement'
+import { addAthlete } from '@/store/slices/athletesSlice'
 import { Eye, EyeOff } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 import { Button } from './ui/button/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -24,6 +28,8 @@ export default function CoachCreateAthleteModal() {
 		password1: false,
 		password2: false,
 	})
+
+	const dispatch = useDispatch()
 
 	const {
 		register,
@@ -41,12 +47,31 @@ export default function CoachCreateAthleteModal() {
 		}))
 	}
 
-	const onSubmit = (data: CoachRegisterAthleteSchema) => {
-		console.log(data)
+	const onSubmit = async (data: CoachRegisterAthleteSchema) => {
+		try {
+			const response = await athletesService.createAthlete(data)
+
+			if ('message' in response) {
+				console.error('Error creating athlete:', response.message)
+				toast.error('Error creating athlete')
+				return
+			}
+
+			dispatch(
+				addAthlete({
+					id: response.id,
+					name: response.name,
+					email: response.email,
+					status: response.status,
+				}),
+			)
+
+			toast.success('Athlete created successfully')
+		} catch (error) {
+			console.error('Error creating athlete:', error)
+			toast.error('Error creating athlete')
+		}
 	}
-	useEffect(() => {
-		console.log(errors, 'errors')
-	}, [errors])
 
 	useEffect(() => {
 		if (isOpen) {

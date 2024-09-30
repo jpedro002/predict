@@ -3,7 +3,6 @@ import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -18,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuthStorage } from '@/hooks/useAuthStorage'
+import { login } from '@/services/login'
 
 const loginSchema = z.object({
 	email: z.string().email('E-mail inválido').min(4, 'E-mail inválido '),
@@ -40,26 +40,38 @@ export const Auth = () => {
 	})
 
 	const onSubmit = async (data: LoginSchema) => {
-		console.log(data)
 		try {
-			signin({
-				jwt: '123',
-				email: data.email,
-				name: 'joão pedro',
-				roles: ['admin'],
+			const response = await login({
+				email: data.email.trim().toLocaleLowerCase(),
+				password: data.password,
 			})
-			toast.success('Wcm', {
-				action: {
-					label: 'Reenviar',
-					onClick: () => {
-						onSubmit(data)
-					},
-				},
-			})
-		} catch (error) {
-			console.log(error)
 
-			toast.error('Credenciais inválidas.')
+			if ('message' in response) {
+				return toast.error(response.message)
+			}
+
+			const { token, user } = response
+
+			console.log(user.status)
+
+			signin({
+				jwt: token,
+				email: user.email,
+				name: user.name,
+				roles: user.role,
+				id: user.id,
+				statusAthlete: user.status || false,
+			})
+
+			toast.success('Wcm')
+
+			if (user.status) {
+				toast('You already submitted the form today', {
+					duration: 10000,
+				})
+			}
+		} catch (_error) {
+			toast.error('Error on login')
 		}
 	}
 
@@ -125,12 +137,6 @@ export const Auth = () => {
 							</Button>
 						</div>
 					</form>
-					<div className="mt-4 text-center text-sm">
-						Don&apos;t have an account?{' '}
-						<Link to="/register" className="underline">
-							Sign up
-						</Link>
-					</div>
 				</CardContent>
 			</Card>
 		</>
