@@ -10,7 +10,8 @@
     "shadcn:add": "pnpm dlx shadcn@latest add ",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "docker:prod": "docker compose up --build -d"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
