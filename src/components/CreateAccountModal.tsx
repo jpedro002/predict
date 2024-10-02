@@ -151,7 +151,7 @@ export default function CreateAccountModal() {
 			</DialogTrigger>
 			<DialogContent
 				aria-describedby={undefined}
-				className="flex flex-col min-h-screen sm:min-h-fit overflow-y-auto h-full"
+				className="flex flex-col sm:min-h-fit overflow-y-auto h-full"
 			>
 				<DialogHeader>
 					<DialogTitle>Criar Conta</DialogTitle>
