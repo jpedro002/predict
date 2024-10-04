@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/projects/predict
+            cd ~/projects/predict-front
             git pull
-            docker-compose down
-            docker-compose up -d --build
+            cd ../
+            docker-compose up -d --build --no-deps frontend
