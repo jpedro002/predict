@@ -24,12 +24,12 @@ export interface PredictRunStats {
 }
 
 export interface predictData {
-	output_gif: string
+	outputFileUrl: string
 	predict: PredictRunStats
 }
 
 const initialState: predictData = {
-	output_gif: '',
+	outputFileUrl: '',
 	predict: {} as PredictRunStats,
 }
 
@@ -38,7 +38,7 @@ export const predictRunSlice = createSlice({
 	initialState,
 	reducers: {
 		startPredictData: (state, action: PayloadAction<predictData>) => {
-			state.output_gif = action.payload.output_gif
+			state.outputFileUrl = action.payload.outputFileUrl
 			state.predict = action.payload.predict
 		},
 	},

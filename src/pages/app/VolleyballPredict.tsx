@@ -24,11 +24,11 @@ export const VolleyballPredict = () => {
 		formData.append('file', data.file)
 		formData.append('predictType', data.predictType)
 
-		//TODO: use predict tipe to change endpoint
 		setLoading(true)
+		//TODO: use predict tipe to change endpoint
 
 		api
-			.post('/predict-run', formData, {
+			.post('/predict/run/treadmill', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
@@ -43,13 +43,13 @@ export const VolleyballPredict = () => {
 				'output_gif' in data
 					? dispatch(
 							startPredictData({
-								output_gif: data.output_gif,
+								outputFileUrl: data.outputFileUrl,
 								predict: data.predict,
 							}),
 						)
 					: dispatch(
 							startPredictData({
-								output_gif: '',
+								outputFileUrl: '',
 								predict: {} as PredictRunStats,
 							}),
 						)

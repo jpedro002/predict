@@ -16,7 +16,9 @@ const PREDICTOPTIONS = ['asymmetry', 'speed', 'distance', 'time']
 export const Run = () => {
 	useAppTitle({ title: 'Corrida' })
 
-	const predictGif = useAppSelector((state) => state.predictRunSlice.output_gif)
+	const outputFileUrl = useAppSelector(
+		(state) => state.predictRunSlice.outputFileUrl,
+	)
 	const predict = useAppSelector((state) => state.predictRunSlice.predict)
 
 	const [loading, setLoading] = useState(false)
@@ -33,28 +35,24 @@ export const Run = () => {
 		//TODO: use predict tipe to change endpoint
 
 		api
-			.post('/predict-run', formData, {
+			.post('/predict/run/treadmill', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
 			})
 			.then((response) => {
-				console.log(response.data)
-
-				console.log(response.data.predict.asymmetry_json)
-
 				const data = response.data
 
-				'output_gif' in data
+				'outputFileUrl' in data
 					? dispatch(
 							startPredictData({
-								output_gif: data.output_gif,
+								outputFileUrl: data.outputFileUrl,
 								predict: data.predict,
 							}),
 						)
 					: dispatch(
 							startPredictData({
-								output_gif: '',
+								outputFileUrl: '',
 								predict: {} as PredictRunStats,
 							}),
 						)
@@ -79,8 +77,8 @@ export const Run = () => {
 					predicOptions={PREDICTOPTIONS}
 				/>
 			</section>
-			{predictGif && predict && (
-				<ReportRunSection output_gif={predictGif} predict={predict} />
+			{outputFileUrl && (
+				<ReportRunSection outputFileUrl={outputFileUrl} predict={predict} />
 			)}
 		</main>
 	)

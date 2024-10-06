@@ -18,7 +18,7 @@ const Title = ({ children, className }: TitleProps) => {
 }
 type ReportProps = predictData
 
-export const ReportRunSection = ({ output_gif, predict }: ReportProps) => {
+export const ReportRunSection = ({ outputFileUrl, predict }: ReportProps) => {
 	const {
 		nome = 'Nome do Arquivo',
 		right_knee_angle_mean = 0,
@@ -62,7 +62,13 @@ export const ReportRunSection = ({ output_gif, predict }: ReportProps) => {
 					Análise Cinemática da Caminhada - {nome}
 				</Title>
 				<div className="flex justify-center mb-6">
-					<img src={`data:image/gif;base64,${output_gif}`} alt="Output GIF" />
+					<video
+						src={outputFileUrl}
+						loop
+						controls
+						onLoadedData={() => console.log('Video carregado')}
+						onError={(e) => console.error('Erro no vídeo', e)}
+					/>
 				</div>
 
 				<div className="mb-6">
