@@ -6,6 +6,8 @@ import { APP_KEY } from '@/hooks/useAuthStorage'
 const api = axios.create({
 	baseURL: env.VITE_API_URL,
 	withCredentials: true,
+	maxContentLength: 100 * 1024 * 1024,
+	maxBodyLength: 100 * 1024 * 1024,
 })
 
 api.interceptors.request.use(async (config) => {
