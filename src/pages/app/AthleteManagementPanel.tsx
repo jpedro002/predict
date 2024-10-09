@@ -59,7 +59,7 @@ export const AthleteManagementPanel = () => {
 
 	return (
 		<>
-			<Helmet title="Athlète" />
+			<Helmet title="Athlète " />
 			<div className="space-y-6 mx-auto w-full p-4 max-w-5xl">
 				<CoachCreateAthleteModal />
 				<FilterAthletesByCoach />
