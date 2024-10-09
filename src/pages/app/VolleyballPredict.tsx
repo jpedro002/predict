@@ -6,7 +6,10 @@ import { useState } from 'react'
 
 import { toast } from 'sonner'
 
-const PREDICTOPTIONS = ['block', 'pass', 'serve']
+const PREDICTOPTIONS = [
+	'block',
+	// 'pass', 'serve'
+]
 
 export const VolleyballPredict = () => {
 	useAppTitle({ title: 'VolleyBall Predict' })
