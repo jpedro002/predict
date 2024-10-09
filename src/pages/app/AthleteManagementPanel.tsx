@@ -15,10 +15,16 @@ import { startAthletes } from '@/store/slices/athletesSlice'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 export const AthleteManagementPanel = () => {
-	useAppTitle({ title: 'Athlete Management' })
+	const [searchParams] = useSearchParams()
+
+	const status = searchParams.get('status')
+	const athleteName = searchParams.get('athleteName')
+
+	useAppTitle({ title: 'Gestion des Athlètes' })
 	const athletes = useAppSelector((state) => state.athletes.athletes)
 	const dispatch = useDispatch()
 
@@ -27,41 +33,44 @@ export const AthleteManagementPanel = () => {
 	useEffect(() => {
 		const fetchAthletes = async () => {
 			try {
-				const athletesData = await listAthletes()
+				const athletesData = await listAthletes({
+					athleteName: athleteName || '',
+					status: status === 'all' ? undefined : status || '',
+				})
 
 				if ('message' in athletesData) {
-					console.error('Error fetching athletes:', athletesData.message)
-					toast.error('Error fetching athletes')
+					console.error(
+						'Erreur lors de la récupération des athlètes:',
+						athletesData.message,
+					)
+					toast.error('Erreur lors de la récupération des athlètes')
 					return
 				}
 
 				dispatch(startAthletes(athletesData))
 			} catch (error) {
-				console.error('Error fetching athletes:', error)
-				toast.error('Error fetching athletes')
+				console.error('Erreur lors de la récupération des athlètes:', error)
+				toast.error('Erreur lors de la récupération des athlètes')
 			}
 		}
 
 		fetchAthletes()
-	}, [dispatch, listAthletes])
+	}, [dispatch, listAthletes, athleteName, status])
 
 	return (
 		<>
-			<Helmet title="Athlete" />
-
-			<div className="space-y-6 mx-auto w-full p-4 max-w-5xl  ">
+			<Helmet title="Athlète" />
+			<div className="space-y-6 mx-auto w-full p-4 max-w-5xl">
 				<CoachCreateAthleteModal />
 				<FilterAthletesByCoach />
 
-				<div className="    ">
+				<div className="">
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="w-full min-w-[150px]">Name</TableHead>
-
-								<TableHead className="min-w-[150px]">status</TableHead>
-
-								<TableHead className="min-w-[72px]">Edit</TableHead>
+								<TableHead className="w-full min-w-[150px]">Nom</TableHead>
+								<TableHead className="min-w-[150px]">Statut</TableHead>
+								<TableHead className="min-w-[72px]">Modifier</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>

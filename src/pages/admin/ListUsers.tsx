@@ -18,10 +18,16 @@ import { useAppSelector } from '@/store'
 import { startUsers } from '@/store/slices/appUsersSlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { UsersTableRow } from '../../components/UsersTableRow'
 
 export const ListUsers = () => {
+	const [searchParams, _] = useSearchParams()
+
+	const status = searchParams.get('status')
+	const customerName = searchParams.get('customerName')
+
 	useAppTitle({ title: 'Usuários' })
 
 	const appUsers = useAppSelector((state) => state.appUsers.users)
@@ -32,7 +38,10 @@ export const ListUsers = () => {
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
-				const users = await listAppUsers()
+				const users = await listAppUsers({
+					customerName: customerName || '',
+					status: status === 'all' ? undefined : status || '',
+				})
 
 				if ('message' in users) {
 					console.error('Erro ao buscar usuários:', users.message)
@@ -48,7 +57,7 @@ export const ListUsers = () => {
 		}
 
 		fetchUsers()
-	}, [])
+	}, [customerName, status])
 
 	return (
 		<>

@@ -37,15 +37,13 @@ export const AthleteManagementTableRow = ({
 				{statusDailyResponse ? (
 					<div className="flex items-center gap-2">
 						<div className="h-2 w-2 bg-green-600 rounded-full" />
-						<span className="text-green-600 font-medium text-sm">
-							Responded
-						</span>
+						<span className="text-green-600 font-medium text-sm">Répondu</span>
 					</div>
 				) : (
 					<div className="flex items-center gap-2">
 						<div className="h-2 w-2 bg-red-600 rounded-full" />
 						<span className="text-red-600 font-medium text-sm">
-							Not Responded
+							Non Répondu
 						</span>
 					</div>
 				)}

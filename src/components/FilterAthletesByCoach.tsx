@@ -73,9 +73,9 @@ export function FilterAthletesByCoach() {
 			onSubmit={handleSubmit(handleFilter)}
 			className="flex flex-wrap items-center gap-2"
 		>
-			<span className="text-sm font-semibold">Filters:</span>
+			<span className="text-sm font-semibold">Filtres :</span>
 			<Input
-				placeholder="Athlete Name"
+				placeholder="Nom de l'athlète"
 				className="h-8 w-[320px]"
 				{...register('athleteName')}
 			/>
@@ -95,9 +95,9 @@ export function FilterAthletesByCoach() {
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="all">All Status</SelectItem>
-								<SelectItem value="responded">Responded</SelectItem>
-								<SelectItem value="notResponded">Not Responded</SelectItem>
+								<SelectItem value="all">Tous les statuts</SelectItem>
+								<SelectItem value="responded">Répondu</SelectItem>
+								<SelectItem value="notResponded">Non répondu</SelectItem>
 							</SelectContent>
 						</Select>
 					)
@@ -105,7 +105,7 @@ export function FilterAthletesByCoach() {
 			/>
 			<Button variant="secondary" size="xs" type="submit">
 				<Search className="mr-2 h-4 w-4" />
-				Filter Results
+				Filtrer les résultats
 			</Button>
 			<Button
 				onClick={handleClearFilters}
@@ -114,7 +114,7 @@ export function FilterAthletesByCoach() {
 				type="button"
 			>
 				<X className="mr-2 h-4 w-4" />
-				Clear Filters
+				Effacer les filtres
 			</Button>
 		</form>
 	)

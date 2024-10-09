@@ -54,11 +54,27 @@ export function UpdateAthleteModal({
 			}
 
 			dispatch(updateAthlete(response))
-			toast.success('Athlete updated successfully')
+			toast.success('Athlète mis à jour avec succès')
 			setIsOpen(false)
 		} catch (error) {
 			console.error(error)
-			toast.error('Error updating athlete')
+			toast.error("Erreur lors de la mise à jour de l'athlète")
+		}
+	}
+
+	const onResetPassword = async () => {
+		try {
+			const response = await athletesService.resetPassword(athleteID)
+
+			if ('message' in response) {
+				return toast.error(response.message)
+			}
+
+			toast.success('Mot de passe réinitialisé avec succès')
+			setIsOpen(false)
+		} catch (error) {
+			console.error(error)
+			toast.error('Erreur lors de la réinitialisation du mot de passe')
 		}
 	}
 
@@ -66,13 +82,13 @@ export function UpdateAthleteModal({
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
 			<DialogTrigger asChild>
 				<Button variant="ghost" className="flex w-full justify-between p-2">
-					<span>Edit</span>
+					<span>Modifier</span>
 					<Pencil size={18} />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="flex flex-col min-h-screen sm:min-h-fit overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>Edit Athlete</DialogTitle>
+					<DialogTitle>Modifier l'athlète</DialogTitle>
 				</DialogHeader>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
@@ -80,7 +96,7 @@ export function UpdateAthleteModal({
 				>
 					<div>
 						<div className="space-y-2">
-							<Label htmlFor="name">Name</Label>
+							<Label htmlFor="name">Nom</Label>
 							<Input id="name" type="text" {...register('name')} />
 							{errors.name && (
 								<span className="text-red-500">{errors.name.message}</span>
@@ -102,16 +118,15 @@ export function UpdateAthleteModal({
 							disabled={isSubmitting || loading}
 							type="submit"
 						>
-							{loading ? 'Updating...' : 'Update Athlete'}
+							{loading ? 'Mise à jour...' : "Mettre à jour l'athlète"}
 						</Button>
 						<Button
 							type="button"
 							className="w-fit mt-5 ml-2"
-							onClick={() => {
-								console.log('Reset password')
-							}}
+							onClick={onResetPassword}
+							disabled={isSubmitting || loading}
 						>
-							Reset Password
+							Réinitialiser le mot de passe
 						</Button>
 					</div>
 				</form>

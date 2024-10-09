@@ -52,8 +52,11 @@ export default function CoachCreateAthleteModal() {
 			const response = await athletesService.createAthlete(data)
 
 			if ('message' in response) {
-				console.error('Error creating athlete:', response.message)
-				toast.error('Error creating athlete')
+				console.error(
+					'Erreur lors de la création de l’athlète :',
+					response.message,
+				)
+				toast.error('Erreur lors de la création de l’athlète')
 				return
 			}
 
@@ -66,10 +69,10 @@ export default function CoachCreateAthleteModal() {
 				}),
 			)
 
-			toast.success('Athlete created successfully')
+			toast.success('Athlète créé avec succès')
 		} catch (error) {
-			console.error('Error creating athlete:', error)
-			toast.error('Error creating athlete')
+			console.error('Erreur lors de la création de l’athlète :', error)
+			toast.error('Erreur lors de la création de l’athlète')
 		}
 	}
 
@@ -120,8 +123,8 @@ export default function CoachCreateAthleteModal() {
 					{passwordVisibility[passwordField] ? <EyeOff /> : <Eye />}
 					<span className="sr-only">
 						{passwordVisibility[passwordField]
-							? 'Ocultar senha'
-							: 'Mostrar senha'}
+							? 'Masquer le mot de passe'
+							: 'Afficher le mot de passe'}
 					</span>
 				</Button>
 			</div>
@@ -131,14 +134,14 @@ export default function CoachCreateAthleteModal() {
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
 			<DialogTrigger asChild>
-				<Button className=" w-full sm:max-w-[16rem]">Create Athlete</Button>
+				<Button className=" w-full sm:max-w-[16rem]">Créer un athlète</Button>
 			</DialogTrigger>
 			<DialogContent
 				aria-describedby={undefined}
 				className="flex flex-col min-h-screen sm:min-h-fit "
 			>
 				<DialogHeader>
-					<DialogTitle>Create Athlete</DialogTitle>
+					<DialogTitle>Créer un athlète</DialogTitle>
 				</DialogHeader>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
@@ -146,7 +149,7 @@ export default function CoachCreateAthleteModal() {
 				>
 					<div>
 						<div className="space-y-2">
-							<Label htmlFor="name">Name</Label>
+							<Label htmlFor="name">Nom</Label>
 							<Input id="name" type="text" {...register('name')} />
 							{errors.name && (
 								<span className="text-red-500">{errors.name.message}</span>
@@ -161,16 +164,16 @@ export default function CoachCreateAthleteModal() {
 							)}
 						</div>
 
-						{renderPasswordField('password', 'Password', 'password1')}
+						{renderPasswordField('password', 'Mot de passe', 'password1')}
 						{renderPasswordField(
 							'retypePassword',
-							'Repeat Password',
+							'Répéter le mot de passe',
 							'password2',
 						)}
 					</div>
 
 					<Button className="w-full mt-5" disabled={isSubmitting} type="submit">
-						Register Athlete
+						Enregistrer l'athlète
 					</Button>
 				</form>
 			</DialogContent>

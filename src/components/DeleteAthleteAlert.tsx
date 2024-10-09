@@ -32,11 +32,11 @@ export const DeleteAthleteAlert = ({ athleteID }: DeleteAthleteAlertProps) => {
 			}
 			if (response.success) {
 				dispatch(deleteAthleteFromStore(athleteID))
-				toast.success('Atleta excluído com sucesso')
+				toast.success('Athlète supprimé avec succès')
 			}
 		} catch (error) {
 			console.error(error)
-			toast.error('Erro ao excluir atleta')
+			toast.error("Erreur lors de la suppression de l'athlète")
 		}
 	}
 
@@ -49,27 +49,28 @@ export const DeleteAthleteAlert = ({ athleteID }: DeleteAthleteAlertProps) => {
 							hover:text-destructive
 							"
 				>
-					<span>Delete</span>
+					<span>Supprimer</span>
 					<Trash size={18} />
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>
-						Are you sure you want to delete this user?
+						Êtes-vous sûr de vouloir supprimer cet utilisateur ?
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						This action cannot be undone. It will permanently delete the account
-						and remove all data from our servers.
+						Cette action ne peut pas être annulée. Elle supprimera
+						définitivement le compte et retirera toutes les données de nos
+						serveurs.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogCancel>Annuler</AlertDialogCancel>
 					<AlertDialogAction
 						onClick={handleDeleteAthlete}
 						className="bg-red-600 text-white hover:bg-red-700"
 					>
-						Confirm
+						Confirmer
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>

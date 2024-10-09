@@ -2,8 +2,6 @@ import { api } from '@/lib/axios'
 import { User } from '@/store/slices/appUsersSlice'
 import axios from 'axios'
 
-// Interfaces para os dados de sucesso ou erro
-
 interface CreateUserSuccess extends User {
 	id: number
 }
@@ -21,24 +19,31 @@ interface DeleteUserSuccess {
 
 type ListUsersSuccess = User[]
 
+interface ListUsersQuery {
+	customerName?: string
+	status?: string
+}
+
 interface GetUserSuccess {
 	user: User
 }
 
-// Tipagem de possíveis erros
+interface SelfUpdateUserSuccess {
+	success: true
+}
+
 interface ServiceError {
 	message: string
 }
 
-// Tipos de resposta para cada operação
 type CreateUserResponse = CreateUserSuccess | ServiceError
 
 type UpdateUserResponse = UpdateUserSuccess | ServiceError
 type DeleteUserResponse = DeleteUserSuccess | ServiceError
 type ListUsersResponse = ListUsersSuccess | ServiceError
 type GetUserResponse = GetUserSuccess | ServiceError
+type SelfUpdateUserResponse = SelfUpdateUserSuccess | ServiceError
 
-// Services estruturados
 const appUsersService = {
 	createUser: async (data: {
 		name: string
@@ -59,7 +64,6 @@ const appUsersService = {
 		}
 	},
 
-	// Obtém o usuário logado
 	getUser: async (): Promise<GetUserResponse> => {
 		try {
 			const response = await api.get('/users/me')
@@ -74,7 +78,6 @@ const appUsersService = {
 		}
 	},
 
-	// Atualiza os dados de um usuário específico
 	updateUser: async (
 		id: number,
 		data: {
@@ -96,7 +99,6 @@ const appUsersService = {
 		}
 	},
 
-	// Deleta um usuário pelo ID
 	deleteUser: async (id: number): Promise<DeleteUserResponse> => {
 		try {
 			const response = await api.delete(`/users/${id}`)
@@ -116,9 +118,21 @@ const appUsersService = {
 		}
 	},
 
-	listUsers: async (): Promise<ListUsersResponse> => {
+	listUsers: async ({
+		customerName,
+		status,
+	}: ListUsersQuery): Promise<ListUsersResponse> => {
 		try {
-			const response = await api.get('/users')
+			const searchParams = new URLSearchParams()
+
+			if (customerName) {
+				searchParams.append('customerName', customerName)
+			}
+			if (status) {
+				searchParams.append('status', status)
+			}
+
+			const response = await api.get(`/users?${searchParams.toString()}`)
 
 			return response.data as ListUsersSuccess
 		} catch (error) {
@@ -130,6 +144,49 @@ const appUsersService = {
 			return { message: 'Network or server error' } as ServiceError
 		}
 	},
-}
 
+	selfUpdateAccount: async (data: {
+		name?: string
+		email?: string
+	}): Promise<SelfUpdateUserResponse> => {
+		try {
+			const response = await api.put<SelfUpdateUserResponse>(
+				'/users/update',
+				data,
+			)
+			if (response.status === 204) {
+				return { success: true }
+			}
+
+			throw new Error('Erro ao tentar atualizar usuário')
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				return error.response.data
+			}
+			throw new Error('Erro ao tentar atualizar usuário')
+		}
+	},
+	selfUpdatePassword: async (data: {
+		currentPassword: string
+		newPassword: string
+	}): Promise<SelfUpdateUserResponse> => {
+		try {
+			const response = await api.put<SelfUpdateUserResponse>(
+				'/api/users/update-password',
+				data,
+			)
+
+			if (response.status === 204) {
+				return { success: true }
+			}
+
+			throw new Error('Erro ao tentar atualizar a senha')
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				return error.response.data
+			}
+			throw new Error('Erro ao tentar atualizar a senha')
+		}
+	},
+}
 export default appUsersService

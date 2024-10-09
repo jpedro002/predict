@@ -12,6 +12,11 @@ interface CreateAthleteSuccess {
 
 type ListAthletesSuccess = Athlete[]
 
+interface ListAthletsQuery {
+	athleteName?: string
+	status?: string
+}
+
 type GetAthleteSuccess = Athlete
 
 type UpdateAthleteSuccess = Omit<Athlete, 'status'>
@@ -51,9 +56,23 @@ const athletesService = {
 		}
 	},
 
-	listAthletes: async (): Promise<ListAthletesResponse> => {
+	listAthletes: async ({
+		athleteName,
+		status,
+	}: ListAthletsQuery): Promise<ListAthletesResponse> => {
 		try {
-			const response = await api.get('/users/list-volleyball-thletes')
+			const searchParams = new URLSearchParams()
+
+			if (athleteName) {
+				searchParams.append('athleteName', athleteName)
+			}
+			if (status) {
+				searchParams.append('status', status)
+			}
+
+			const response = await api.get(
+				`/users/list-volleyball-thletes?${searchParams.toString()}`,
+			)
 			return response.data as ListAthletesSuccess
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
@@ -65,7 +84,6 @@ const athletesService = {
 		}
 	},
 
-	// Retrieves a specific athlete by ID
 	getAthlete: async (id: number): Promise<GetAthleteResponse> => {
 		try {
 			const response = await api.get(`/athletes/${id}`)
@@ -103,6 +121,25 @@ const athletesService = {
 	deleteAthlete: async (id: number): Promise<DeleteUserResponse> => {
 		try {
 			const response = await api.delete(`/users/${id}`)
+
+			if (response.status === 204) {
+				return { success: true }
+			}
+
+			return { message: 'Unknown error occurred' } as ServiceError
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				return {
+					message: error.response.data.message || 'Unknown error occurred',
+				} as ServiceError
+			}
+			return { message: 'Network or server error' } as ServiceError
+		}
+	},
+
+	resetPassword: async (id: number): Promise<DeleteUserResponse> => {
+		try {
+			const response = await api.patch(`/users/resetPassword/${id}`)
 
 			if (response.status === 204) {
 				return { success: true }

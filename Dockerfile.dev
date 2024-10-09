@@ -1,0 +1,19 @@
+# Imagem base
+FROM node:lts
+
+WORKDIR /app
+
+RUN npm install -g pnpm
+
+COPY pnpm-lock.yaml ./
+COPY package.json ./
+
+RUN pnpm install
+
+COPY . .
+
+EXPOSE 5173
+
+ENV NODE_ENV=development
+
+# CMD ["pnpm", "run", "dev", "--", "--host", "0.0.0.0"]
