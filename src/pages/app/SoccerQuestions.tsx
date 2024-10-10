@@ -197,30 +197,7 @@ export const SoccerQuestions = () => {
 							scaleDescription="Échelle : 0 (Pas du tout) à 10 (Fortement impacté(e) négativement)"
 						/>
 					</div>
-					{/* Percepção de Carga de Treino */}
-					<div className="mb-6">
-						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
-							Percepção de Carga de Treino
-						</h2>
-						<FieldFormSoccerQuestions
-							label="Como você avalia a intensidade do seu treino hoje?"
-							name="workoutIntensity"
-							hasFieldError={!!errors.workoutIntensity}
-							scaleDescription="Escala: 0 (Muito leve) a 10 (Extremamente intenso)"
-						/>
-						<FieldFormSoccerQuestions
-							label="Como você percebe seu esforço geral durante o treinamento ou competição?"
-							name="workoutEffort"
-							hasFieldError={!!errors.workoutEffort}
-							scaleDescription="Escala: 0 (Nenhum esforço) a 10 (Esforço extremo)"
-						/>
-						<FieldFormSoccerQuestions
-							label="Houve algum momento em que você sentiu que não conseguiu acompanhar a carga do treino?"
-							name="workoutOverload"
-							hasFieldError={!!errors.workoutOverload}
-							scaleDescription="Escala: 0 (Nunca) a 10 (O tempo todo)"
-						/>
-					</div>
+
 					{/* Perception de la Charge d'Entraînement */}
 					<div className="mb-6">
 						<h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 px-4">
