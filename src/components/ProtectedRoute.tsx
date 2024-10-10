@@ -4,6 +4,7 @@ import { clearUser } from '@/store/slices/userSlice'
 import { ReactNode, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { SpinnerLoading } from './SpinnerLoading'
 
 interface ProtectedRouteProps {
 	requiredRoles: string[]
@@ -44,7 +45,11 @@ export function ProtectedRoute({
 	])
 
 	if (user.isLoadingUser) {
-		return <div>Loading...</div>
+		return (
+			<div className="w-full h-full grid place-items-center">
+				<SpinnerLoading className="size-8" />
+			</div>
+		)
 	}
 
 	const hasPermission = requiredRoles.some((role) => user.roles.includes(role))

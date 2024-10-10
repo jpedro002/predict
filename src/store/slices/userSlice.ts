@@ -30,12 +30,14 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setUser: (state, action: PayloadAction<UserState>) => {
-			const { name, email, roles, id, statusAthlete } = action.payload
+			const { name, email, roles, id, statusAthlete, isLoadingUser } =
+				action.payload
 
 			state.name = name
 			state.email = email
 			state.roles = roles
 			state.id = id
+			state.isLoadingUser = isLoadingUser
 			if (statusAthlete) {
 				state.statusAthlete = statusAthlete
 			}
