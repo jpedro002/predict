@@ -145,47 +145,68 @@ const appUsersService = {
 		}
 	},
 
+	resetPassword: async (id: number): Promise<DeleteUserResponse> => {
+		try {
+			const response = await api.patch(`/users/resetPassword/${id}`)
+
+			if (response.status === 204) {
+				return { success: true }
+			}
+
+			return { message: 'Unknown error occurred' } as ServiceError
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				return {
+					message: error.response.data.message || 'Unknown error occurred',
+				} as ServiceError
+			}
+			return { message: 'Network or server error' } as ServiceError
+		}
+	},
+
 	selfUpdateAccount: async (data: {
 		name?: string
 		email?: string
 	}): Promise<SelfUpdateUserResponse> => {
 		try {
 			const response = await api.put<SelfUpdateUserResponse>(
-				'/users/update',
+				'users/me/email-and-name',
 				data,
 			)
 			if (response.status === 204) {
 				return { success: true }
 			}
 
-			throw new Error('Erro ao tentar atualizar usuário')
+			throw new Error('Error trying to update user')
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
 				return error.response.data
 			}
-			throw new Error('Erro ao tentar atualizar usuário')
+			throw new Error('Error trying to update user')
 		}
 	},
+
 	selfUpdatePassword: async (data: {
-		currentPassword: string
+		oldPassword: string
 		newPassword: string
 	}): Promise<SelfUpdateUserResponse> => {
 		try {
-			const response = await api.put<SelfUpdateUserResponse>(
-				'/api/users/update-password',
-				data,
-			)
+			const response = await api.put('/users/me/password', data)
 
-			if (response.status === 204) {
+			if (response.status === 200) {
 				return { success: true }
 			}
 
-			throw new Error('Erro ao tentar atualizar a senha')
+			throw new Error('Error trying to update password')
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
-				return error.response.data
+				if (error.response.status === 400) {
+					return {
+						message: error.response.data.error || 'old password is incorrect',
+					}
+				}
 			}
-			throw new Error('Erro ao tentar atualizar a senha')
+			throw new Error('Error trying to update password')
 		}
 	},
 }

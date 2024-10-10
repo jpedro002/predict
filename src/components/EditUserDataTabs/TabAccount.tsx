@@ -9,8 +9,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import appUsersService from '@/services/appUsers/appUsersServices'
 import { useAppSelector } from '@/store'
+import { setUser } from '@/store/slices/userSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '../ui/button/button'
@@ -26,6 +28,7 @@ export const TabAccount = ({
 	handleCloseModal,
 }: { handleCloseModal: () => void }) => {
 	const userData = useAppSelector((state) => state.user)
+	const dispatch = useDispatch()
 
 	const {
 		register,
@@ -49,10 +52,20 @@ export const TabAccount = ({
 			}
 
 			if (response.success) {
+				dispatch(
+					setUser({
+						name: data.name,
+						email: data.email,
+						roles: userData.roles,
+						id: userData.id,
+						statusAthlete: userData.statusAthlete,
+						isLoadingUser: false,
+					}),
+				)
 				toast.success('Account updated successfully')
+				handleCloseModal()
+				return
 			}
-
-			handleCloseModal()
 		} catch (error) {
 			console.error(error)
 			toast.error('Error updating the account')

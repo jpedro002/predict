@@ -18,31 +18,14 @@ export function ProtectedRoute({
 	const { getDefaultRoute, getJwt } = useAuthStorage()
 	const user = useAppSelector((state) => state.user)
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 	const location = useLocation()
 	const jwt = getJwt()
 
 	useEffect(() => {
-		if (!user.isLoadingUser) {
-			if (!jwt) {
-				navigate('/auth', { replace: true })
-			} else if (user.roles.length > 0) {
-				const defaultRoute = getDefaultRoute(user.roles)
-
-				if (defaultRoute === '/logout') {
-					dispatch(clearUser())
-					navigate('/auth', { replace: true })
-				}
-			}
+		if (!jwt) {
+			navigate('/auth', { replace: true })
 		}
-	}, [
-		user.isLoadingUser,
-		getJwt,
-		user.roles,
-		getDefaultRoute,
-		dispatch,
-		navigate,
-	])
+	}, [jwt])
 
 	if (user.isLoadingUser) {
 		return (

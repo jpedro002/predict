@@ -17,7 +17,7 @@ export function EditUserDataTabs({
 				<TabAccount handleCloseModal={handleCloseModal} />
 			</TabsContent>
 			<TabsContent value="password">
-				<TabPassword />
+				<TabPassword handleCloseModal={handleCloseModal} />
 			</TabsContent>
 		</Tabs>
 	)

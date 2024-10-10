@@ -85,6 +85,22 @@ export default function UpdateUserModal({
 		}
 	}
 
+	const onResetPassword = async () => {
+		try {
+			const response = await appUsersService.resetPassword(userID)
+
+			if ('message' in response) {
+				return toast.error(response.message)
+			}
+
+			toast.success('Password reset successfully')
+			setIsOpen(false)
+		} catch (error) {
+			console.error(error)
+			toast.error('Error occurred during password reset')
+		}
+	}
+
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
 			<DialogTrigger asChild>
@@ -191,9 +207,7 @@ export default function UpdateUserModal({
 						<Button
 							type="button"
 							className="w-fit mt-5 ml-2"
-							onClick={() => {
-								console.log('oi')
-							}}
+							onClick={onResetPassword}
 						>
 							Resetar Senha
 						</Button>

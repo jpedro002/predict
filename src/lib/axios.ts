@@ -22,11 +22,20 @@ api.interceptors.request.use(async (config) => {
 	}
 })
 
-api.interceptors.response.use(null, async (error: AxiosError) => {
-	if (error?.response?.status === 403 || error?.response?.status === 401) {
-		localStorage.removeItem(APP_KEY)
-	}
-	if (error) throw error
-})
+interface ErrorResponse {
+	error: string
+}
+
+api.interceptors.response.use(
+	null,
+	async (error: AxiosError<ErrorResponse>) => {
+		if (error?.response?.status === 403 || error?.response?.status === 401) {
+			if (error.response.data.error === 'Unauthorized') {
+				localStorage.removeItem(APP_KEY)
+			}
+		}
+		if (error) throw error
+	},
+)
 
 export { api }
