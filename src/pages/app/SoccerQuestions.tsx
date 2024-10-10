@@ -6,6 +6,7 @@ import { AthleteFormSubmitService } from '@/services/AthleteFormSubmitService'
 import { useAppSelector } from '@/store'
 import { setStatusAthlete } from '@/store/slices/userSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
@@ -16,6 +17,7 @@ export const SoccerQuestions = () => {
 	useAppTitle({ title: 'questionnaire' })
 	const dayliResponse = useAppSelector((state) => state.user.statusAthlete)
 	const dispatch = useDispatch()
+	const [load, setLoad] = useState(false)
 
 	const methods = useForm<athleteFormType>({
 		resolver: zodResolver(athleteFormSchema),
@@ -33,6 +35,7 @@ export const SoccerQuestions = () => {
 					'try again tomorrow u already submitted the form today',
 				)
 			}
+			setLoad(true)
 
 			const response = await AthleteFormSubmitService(data)
 
@@ -46,6 +49,7 @@ export const SoccerQuestions = () => {
 		} catch (_error) {
 			toast.error('Error submitting form')
 		}
+		setLoad(false)
 	}
 
 	return (
@@ -318,7 +322,7 @@ export const SoccerQuestions = () => {
 
 					<Button
 						type="submit"
-						disabled={dayliResponse}
+						disabled={dayliResponse || load}
 						className="mx-auto w-full md:max-w-48"
 					>
 						envoyer
