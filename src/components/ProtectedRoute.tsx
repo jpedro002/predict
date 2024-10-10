@@ -19,10 +19,9 @@ export function ProtectedRoute({
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const location = useLocation()
+	const jwt = getJwt()
 
 	useEffect(() => {
-		const jwt = getJwt()
-
 		if (!user.isLoadingUser) {
 			if (!jwt) {
 				navigate('/auth', { replace: true })
@@ -51,7 +50,7 @@ export function ProtectedRoute({
 	const hasPermission = requiredRoles.some((role) => user.roles.includes(role))
 	const defaultRoute = getDefaultRoute(user.roles)
 
-	if (!hasPermission) {
+	if (!hasPermission && !user.isLoadingUser) {
 		return <Navigate to={defaultRoute} state={{ from: location }} replace />
 	}
 

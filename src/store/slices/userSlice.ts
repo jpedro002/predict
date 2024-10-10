@@ -15,7 +15,7 @@ const initialState: UserState = {
 	name: '',
 	email: '',
 	roles: [],
-	isLoadingUser: false,
+	isLoadingUser: true,
 	statusAthlete: false,
 }
 

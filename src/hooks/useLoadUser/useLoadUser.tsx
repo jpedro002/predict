@@ -14,8 +14,8 @@ export const useLoadUser = (s: string) => {
 	const fetchUser = useCallback(async () => {
 		const token = localStorage.getItem(APP_KEY)
 		if (token) {
-			dispatch(setIsLoadingUser(true))
 			try {
+				dispatch(setIsLoadingUser(true))
 				await dispatch(fetchUserRdx())
 			} catch (_error) {
 				console.error('Erro ao carregar usuário')
@@ -23,7 +23,7 @@ export const useLoadUser = (s: string) => {
 				dispatch(setIsLoadingUser(false))
 			}
 		}
-	}, [dispatch])
+	}, [])
 
 	useEffect(() => {
 		const isUserDefault =
