@@ -1,8 +1,6 @@
 import { useAuthStorage } from '@/hooks/useAuthStorage'
 import { useAppSelector } from '@/store'
-import { clearUser } from '@/store/slices/userSlice'
 import { ReactNode, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { SpinnerLoading } from './SpinnerLoading'
 
